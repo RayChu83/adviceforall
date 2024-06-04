@@ -5,18 +5,22 @@ import React from "react";
 export default function Benefits() {
   const benefits = getBenefits();
   return (
-    <div className="space-y-10 max-w-[1280px] m-auto">
+    <div className="space-y-10">
       {benefits.map((benefit, index) => (
         <section
           key={benefit.imgSrc}
           className="grid md:grid-cols-2 grid-cols-1 items-center gap-x-10 gap-y-5"
         >
-          {index % 2 === 0 && <RenderImageBenefit benefit={benefit} />}
+          <span className={`${index % 2 === 0 ? "block" : "md:hidden block"}`}>
+            <RenderImageBenefit benefit={benefit} />
+          </span>
           <article>
             <h2 className="font-semibold text-3xl">{benefit.title}</h2>
             <p>{benefit.description}</p>
           </article>
-          {index % 2 === 1 && <RenderImageBenefit benefit={benefit} />}
+          <span className={`${index % 2 === 1 ? "md:block hidden" : "hidden"}`}>
+            <RenderImageBenefit benefit={benefit} />
+          </span>
         </section>
       ))}
     </div>

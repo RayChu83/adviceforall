@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default function Navbar() {
   return (
-    <nav className="flex justify-between items-center p-10 max-w-[1560px] m-auto">
+    <nav className="flex justify-between items-center pt-10 p-5 max-w-[1560px] m-auto">
       <Link href="/" className="flex items-center gap-2 text-2xl font-bold">
         <BiWorld className="text-3xl " />
         AdviceForAll
