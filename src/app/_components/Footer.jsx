@@ -26,9 +26,9 @@ export default function Footer() {
         </svg>
       </div>
       <footer className="p-10 bg-blue-darker">
-        <span className="max-w-[1560px] m-auto flex justify-between items-start gap-5 flex-wrap">
+        <span className="max-w-[1560px] m-auto flex md:justify-between justify-center items-start gap-5 flex-wrap">
           <article className="space-y-1">
-            <h3 className="flex items-center gap-2 text-2xl font-bold">
+            <h3 className="flex items-center gap-2 text-2xl font-bold md:justify-start justify-center">
               <BiWorld className="text-3xl " />
               AdviceForAll
             </h3>
@@ -36,11 +36,11 @@ export default function Footer() {
               © AdviceForAll, all rights reserved
             </p>
           </article>
-          <article className="flex flex-col gap-1 text-right">
+          <article className="flex flex-col gap-1 md:text-right text-center">
             <h3 className="font-semibold text-2xl">Contact Us</h3>
             <p>{email}</p>
             <p>{phone}</p>
-            <span className="flex text-xl gap-2 justify-end">
+            <span className="flex text-xl gap-2 md:justify-end justify-center">
               <Link href="/contact">
                 <FaQuestion className="text-white" />
               </Link>
