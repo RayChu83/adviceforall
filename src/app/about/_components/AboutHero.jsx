@@ -1,10 +1,21 @@
+"use client";
+import { MULTIDIRECTION_SLIDE_VARIANTS } from "@/lib/transitions";
+import { motion } from "framer-motion";
 import Image from "next/image";
+
 import React from "react";
 
 export default function AboutHero() {
   return (
     <section className="grid md:grid-cols-10 grid-cols-1 items-center gap-5 mb-10">
-      <article className="col-span-6">
+      <motion.article
+        className="col-span-6"
+        initial="leftHidden"
+        whileInView="visible"
+        variants={MULTIDIRECTION_SLIDE_VARIANTS}
+        transition={{ duration: 0.5 }}
+        viewport={{ once: true }}
+      >
         <div className="max-w-[600px] space-y-2">
           <h1 className="font-bold md:text-4xl text-[32px] leading-9">
             Our Mission:
@@ -18,15 +29,22 @@ export default function AboutHero() {
             development and beyond.
           </p>
         </div>
-      </article>
-      <section className="col-span-4 flex md:justify-end justify-start">
+      </motion.article>
+      <motion.section
+        className="col-span-4 flex md:justify-end justify-start"
+        initial="rightHidden"
+        whileInView="visible"
+        variants={MULTIDIRECTION_SLIDE_VARIANTS}
+        transition={{ duration: 0.5 }}
+        viewport={{ once: true }}
+      >
         <Image
           src="/about-hero.svg"
           width={400}
           height={400}
           alt="Hero Image"
         />
-      </section>
+      </motion.section>
     </section>
   );
 }
