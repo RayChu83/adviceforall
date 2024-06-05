@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import getFeaturedRooms from "@/lib/getFeaturedRooms";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import { gradual } from "@/lib/transitions";
+import { GRADUAL } from "@/lib/transitions";
 
 import React from "react";
 
@@ -19,7 +19,7 @@ export default function PreviewRooms() {
             initial="hidden"
             whileInView="visible"
             exit="hidden"
-            variants={gradual}
+            variants={GRADUAL}
             transition={{ duration: 0.5, delay: index * 0.1 }}
             viewport={{ once: true }}
           >

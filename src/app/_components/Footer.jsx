@@ -1,9 +1,12 @@
+"use client";
 import Link from "next/link";
 import { BiWorld } from "react-icons/bi";
 import { FaQuestion } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
 import { FaTiktok } from "react-icons/fa6";
 import getContact from "@/lib/getContact";
+import { motion } from "framer-motion";
+import { FADE_UP_ANIMATION_VARIANTS } from "@/lib/transitions";
 
 import React from "react";
 
@@ -26,7 +29,14 @@ export default function Footer() {
         </svg>
       </div>
       <footer className="p-10 bg-blue-darker">
-        <span className="max-w-[1560px] m-auto flex md:justify-between justify-center items-start gap-5 flex-wrap">
+        <motion.span
+          className="max-w-[1560px] m-auto flex md:justify-between justify-center items-start gap-5 flex-wrap"
+          initial="hidden"
+          whileInView="show"
+          variants={FADE_UP_ANIMATION_VARIANTS}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+        >
           <article className="space-y-1">
             <h3 className="flex items-center gap-2 text-2xl font-bold md:justify-start justify-center">
               <BiWorld className="text-3xl " />
@@ -52,7 +62,7 @@ export default function Footer() {
               </Link>
             </span>
           </article>
-        </span>
+        </motion.span>
       </footer>
     </>
   );
