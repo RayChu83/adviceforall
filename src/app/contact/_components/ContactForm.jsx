@@ -1,10 +1,10 @@
 import getContact from "@/lib/getContact";
 import Link from "next/link";
 import { FaTiktok, FaYoutube } from "react-icons/fa";
-
-import React from "react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+
+import React from "react";
 
 export default function ContactForm() {
   const { location, email, phone, youtube, tiktok } = getContact();

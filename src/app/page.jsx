@@ -1,10 +1,10 @@
 import Hero from "@/app/_components/Hero";
 import FeaturedRooms from "@/app/_components/FeaturedRooms";
-
-import React from "react";
 import Benefits from "./_components/Benefits";
 
-export default function LandingPage() {
+import React from "react";
+
+export default async function LandingPage() {
   return (
     <div className="space-y-10">
       <Hero />

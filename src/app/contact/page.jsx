@@ -39,7 +39,7 @@ export default function ContactPage() {
       <br />
       <motion.span
         initial="hidden"
-        animate="visible"
+        whileInView="visible"
         transition={{ duration: 0.5 }}
         variants={BLUR_IN}
       >
