@@ -9,7 +9,7 @@ import React from "react";
 export default function ContactForm() {
   const { location, email, phone, youtube, tiktok } = getContact();
   return (
-    <div className="md:grid grid-cols-2 flex flex-col-reverse max-w-[864px] p-8 m-auto gap-8 flex-wrap bg-blue-darker drop-shadow-md">
+    <div className="md:grid grid-cols-2 flex flex-col-reverse max-w-[864px] p-8 m-auto gap-8 bg-blue-darker drop-shadow-md rounded-md">
       <form className="rounded-md flex flex-col gap-2">
         <h2 className="font-semibold text-2xl">Contact form</h2>
         <input

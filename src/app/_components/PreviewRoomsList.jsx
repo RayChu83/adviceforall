@@ -13,7 +13,7 @@ export default function PreviewRoomsList({ rooms }) {
         {rooms.map((room, index) => (
           <motion.article
             key={room._id}
-            className="col-span-3 p-5 bg-blue-darker drop-shadow-md"
+            className="col-span-3 p-5 bg-blue-darker drop-shadow-md rounded-md"
             initial="hidden"
             whileInView="visible"
             exit="hidden"
