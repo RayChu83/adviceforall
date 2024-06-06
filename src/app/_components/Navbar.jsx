@@ -59,7 +59,7 @@ export default function Navbar() {
       <div
         className={`fixed bg-blue-dark top-0 bottom-0 ${
           isNavOpen ? "left-0" : "left-[-100%]"
-        } w-full overflow-y-auto text-center drop-shadow-md transition-left duration-300 z-10 flex justify-center items-center`}
+        } w-full overflow-y-auto text-center drop-shadow-md transition-left duration-200 z-10 flex justify-center items-center`}
       >
         <ul className="flex flex-col gap-5 items-center justify-center">
           {navLinks.map((navLink) =>
