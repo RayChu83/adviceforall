@@ -7,5 +7,5 @@ export default async function PreviewRooms() {
     cache: "no-store",
   });
   const { rooms } = await res.json();
-  return <PreviewRoomsList rooms={rooms} />;
+  return rooms && <PreviewRoomsList rooms={rooms} />;
 }
