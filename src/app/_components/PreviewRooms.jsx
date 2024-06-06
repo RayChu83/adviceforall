@@ -1,4 +1,4 @@
-import PreviewRoomsList from "@/app/_components/PreviewRoomsList";
+import RoomsContainer from "@/app/_components/RoomsContainer";
 import React from "react";
 
 export default async function PreviewRooms() {
@@ -7,5 +7,5 @@ export default async function PreviewRooms() {
     cache: "no-store",
   });
   const { rooms } = await res.json();
-  return rooms && <PreviewRoomsList rooms={rooms} />;
+  return rooms && <RoomsContainer rooms={rooms} />;
 }

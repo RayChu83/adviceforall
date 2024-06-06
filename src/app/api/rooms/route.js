@@ -7,7 +7,7 @@ export async function GET(req) {
   try {
     await dbConnect();
     const rooms = await Room.find();
-    return NextResponse.json({ ...rooms }, { status: 200 });
+    return NextResponse.json({ rooms }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       { message: "Something went wrong. Please try again" },
@@ -33,7 +33,7 @@ export async function POST(req) {
       query: data.name,
       per_page: 1,
     });
-    const room = await Room.create({ ...data, banner: photos });
+    const room = await Room.create({ ...data, banner: photos[0] });
     return NextResponse.json({ room }, { status: 201 });
   } catch (error) {
     return NextResponse.json(

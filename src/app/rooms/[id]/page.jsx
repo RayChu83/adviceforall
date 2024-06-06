@@ -1,5 +1,5 @@
 import React from "react";
 
-export default function RoomDetailedPage() {
-  return <div>RoomDetailedPage</div>;
+export default function RoomDetailedPage({ params }) {
+  return <div>{params.id}</div>;
 }
