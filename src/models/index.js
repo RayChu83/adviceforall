@@ -44,5 +44,5 @@ const messageSchema = new Schema({
 });
 
 export const Room = mongoose.models.rooms || model("rooms", roomSchema);
-export const Messages =
+export const Message =
   mongoose.models.messages || model("messages", messageSchema);

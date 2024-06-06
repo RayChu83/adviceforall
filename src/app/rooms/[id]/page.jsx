@@ -1,4 +1,8 @@
+import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
+import { FaAngleLeft } from "react-icons/fa";
+
 import React from "react";
 
 export default async function RoomDetailedPage({ params }) {
@@ -6,10 +10,27 @@ export default async function RoomDetailedPage({ params }) {
     `${process.env.NEXT_PUBLIC_URL}/api/rooms/${params.id}`
   );
   if (!res.ok) return notFound();
-  const room = await res.json();
+  const { room } = await res.json();
   return (
     <div>
-      {JSON.stringify(room) || `Something went wrong. Please try again`}
+      <span className="space-y-[6px]">
+        <Link href="/rooms" className="flex items-center gap-[6px]">
+          <FaAngleLeft />
+          Return to All
+        </Link>
+        <Image
+          src={`https://images.pexels.com/photos/${String(
+            room.banner.id
+          )}/pexels-photo-${String(
+            room.banner.id
+          )}.jpeg?auto=compress&fit=crop&h=400&w=1560`}
+          alt={room.banner.alt}
+          width={0}
+          height={0}
+          sizes="100vw"
+          className="w-full h-auto bg-gray-primary"
+        />
+      </span>
     </div>
   );
 }
