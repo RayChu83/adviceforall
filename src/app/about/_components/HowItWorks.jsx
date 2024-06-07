@@ -25,8 +25,6 @@ export default function HowItWorks() {
           find 3 featured rooms that you might like:
         </p>
       </motion.article>
-      <br />
-      <PreviewRooms />
     </section>
   );
 }

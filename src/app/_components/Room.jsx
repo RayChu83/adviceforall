@@ -12,7 +12,8 @@ export default function Room({ room }) {
         height={0}
         alt={room.banner.alt}
         sizes="100vw"
-        className="w-full h-auto rounded-t-lg"
+        className="w-full h-auto rounded-t-lg bg-gray-primary"
+        loading="lazy"
       />
       <div className="p-5">
         <h3 className="font-semibold text-xl line-clamp-2 group-hover:underline underline-offset-1">

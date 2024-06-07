@@ -23,12 +23,13 @@ export default async function RoomDetailedPage({ params }) {
             room.banner.id
           )}/pexels-photo-${String(
             room.banner.id
-          )}.jpeg?auto=compress&fit=crop&h=400&w=1560`}
+          )}.jpeg?auto=compress&fit=crop&h=300&w=1560`}
           alt={room.banner.alt}
           width={0}
           height={0}
           sizes="100vw"
           className="w-full h-auto bg-gray-primary"
+          loading="lazy"
         />
       </span>
     </div>
