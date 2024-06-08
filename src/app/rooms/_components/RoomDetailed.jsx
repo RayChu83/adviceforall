@@ -19,6 +19,7 @@ import AnimateUp from "@/app/_components/AnimateUp";
 import {
   Dialog,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTrigger,
 } from "@/components/ui/dialog";
@@ -203,30 +204,32 @@ export default function RoomDetailed({ room, id }) {
                                 </h3>
                               </section>
                             )}
-                            <form
-                              onSubmit={(e) => handleSubmit(e, response._id)}
-                              className="flex items-center w-full gap-2 sticky bottom-0"
-                            >
-                              <input
-                                type="text"
-                                placeholder="Reply..."
-                                className={`bg-blue-light p-2 rounded-2xl focus:outline-blue-primary placeholder:text-sm w-full indent-1 ${
-                                  !comment && "animate-bgPulse"
-                                }`}
-                                value={comment}
-                                onChange={(e) => setComment(e.target.value)}
-                                ref={inputRef}
-                              />
-                              <Button
-                                variant="primary"
-                                className={`w-[40px] h-[40px] rounded-full ${
-                                  !comment && "cursor-not-allowed"
-                                }`}
-                                disabled={!comment}
+                            <DialogFooter className="sticky bottom-0">
+                              <form
+                                onSubmit={(e) => handleSubmit(e, response._id)}
+                                className="flex items-center w-full gap-2"
                               >
-                                <FaArrowUp />
-                              </Button>
-                            </form>
+                                <input
+                                  type="text"
+                                  placeholder="Reply..."
+                                  className={`bg-blue-light p-2 rounded-2xl focus:outline-blue-primary placeholder:text-sm w-full indent-1 ${
+                                    !comment && "animate-bgPulse"
+                                  }`}
+                                  value={comment}
+                                  onChange={(e) => setComment(e.target.value)}
+                                  ref={inputRef}
+                                />
+                                <Button
+                                  variant="primary"
+                                  className={`w-[40px] h-[40px] rounded-full ${
+                                    !comment && "cursor-not-allowed"
+                                  }`}
+                                  disabled={!comment}
+                                >
+                                  <FaArrowUp />
+                                </Button>
+                              </form>
+                            </DialogFooter>
                           </DialogContent>
                         </Dialog>
                       </motion.article>
