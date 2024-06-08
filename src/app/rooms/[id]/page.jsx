@@ -25,9 +25,13 @@ export default async function RoomDetailedPage({ params }) {
   );
   if (!res.ok) return notFound();
   const { room } = await res.json();
+  console.log(room.responses);
   return (
     <div>
-      <Link href="/rooms" className="flex items-center gap-[6px] mb-2">
+      <Link
+        href="/rooms"
+        className="flex items-center gap-[6px] mb-2 hover:underline underline-offset-1"
+      >
         <FaAngleLeft />
         Return to All
       </Link>
@@ -45,27 +49,29 @@ export default async function RoomDetailedPage({ params }) {
           loading="lazy"
         />
         <article className="p-4">
-          <h3 className="text-xl font-semibold line-clamp-2" title={room.name}>
+          <h3 className="text-xl font-semibold" title={room.name}>
             {room.name}
           </h3>
           <small className="text-gray-primary">
-            {room.messages.length} messages
+            {room.responses.length} response{room.responses.length !== 1 && "s"}
           </small>
-          {room.messages.length ? (
+          {room.responses.length ? (
             <div className="md:w-[90%] w-[80%] m-auto py-5">
               <Carousel className="w-full">
                 <CarouselContent>
-                  {room.messages.map((message) => (
+                  {room.responses.map((response) => (
                     <CarouselItem
-                      key={message._id}
+                      key={response._id}
                       className="pl-1 md:basis-1/2 lg:basis-1/3"
                     >
                       <article className="p-4 flex flex-col gap-2 max-h-[250px] relative bg-blue-light overflow-y-hidden group rounded-md drop-shadow-md h-full background-fade">
                         <span className="flex items-center gap-2 font-medium">
-                          <Avatar>A</Avatar>
+                          <Avatar sx={{ bgcolor: response.avatarColor }}>
+                            A
+                          </Avatar>
                           Anonymous
                         </span>
-                        <p className="text-fade">{message.message}</p>
+                        <p className="text-fade">{response.message}</p>
                         <Button
                           className="absolute bottom-2 left-[47%] transform -translate-x-1/2 group-hover:opacity-100 opacity-0 transition-opacity duration-250"
                           variant="primary"

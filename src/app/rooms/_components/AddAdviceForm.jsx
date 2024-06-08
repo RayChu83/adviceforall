@@ -6,17 +6,16 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 export default function AddAdviceForm({ id }) {
-  console.log(id);
-  const [value, setValue] = useState("");
+  const [message, setMessage] = useState("");
   const router = useRouter();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await fetch(`/api/rooms/${id}/comments`, {
+    const res = await fetch(`/api/rooms/${id}/responses`, {
       method: "post",
       cache: "no-store",
-      body: JSON.stringify({ message: value }),
+      body: JSON.stringify({ message }),
     });
-    setValue("");
+    setMessage("");
     router.refresh();
   };
   return (
@@ -25,17 +24,17 @@ export default function AddAdviceForm({ id }) {
         type="text"
         placeholder="Give Advice..."
         className={`bg-blue-light p-2 rounded-2xl focus:outline-blue-primary placeholder:text-sm w-full indent-1 ${
-          !value && "animate-pulse"
+          !message && "animate-pulse"
         }`}
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
       />
       <Button
         variant="primary"
         className={`w-[40px] h-[40px] rounded-full ${
-          !value && "cursor-not-allowed"
+          !message && "cursor-not-allowed"
         }`}
-        disabled={!value}
+        disabled={!message}
       >
         <FaArrowUp />
       </Button>

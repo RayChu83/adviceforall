@@ -6,10 +6,10 @@ await dbConnect();
 const roomSchema = new Schema(
   {
     name: String,
-    messages: [
+    responses: [
       {
         type: SchemaTypes.ObjectId,
-        ref: "messages",
+        ref: "responses",
       },
     ],
     description: String,
@@ -39,8 +39,9 @@ const roomSchema = new Schema(
   { timestamps: true }
 );
 
-const messageSchema = new Schema(
+const responseSchema = new Schema(
   {
+    avatarColor: String,
     room: SchemaTypes.ObjectId,
     message: String,
     likes: Number,
@@ -50,5 +51,5 @@ const messageSchema = new Schema(
 );
 
 export const Room = mongoose.models.rooms || model("rooms", roomSchema);
-export const Message =
-  mongoose.models.messages || model("messages", messageSchema);
+export const Response =
+  mongoose.models.responses || model("responses", responseSchema);

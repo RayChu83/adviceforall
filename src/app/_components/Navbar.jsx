@@ -38,7 +38,7 @@ export default function Navbar() {
           <ul className="md:flex hidden gap-5 items-center">
             {navLinks.map((navLink) =>
               navLink.name === "Register" ? (
-                <Button variant="primary" key={navLink.href}>
+                <Button variant="primary" key={navLink.href} asChild>
                   <Link href={navLink.href}>{navLink.name}</Link>
                 </Button>
               ) : (

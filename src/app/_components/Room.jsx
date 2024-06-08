@@ -23,7 +23,7 @@ export default function Room({ room }) {
           {room.name}
         </h3>
         <small className="text-gray-primary">
-          {room.messages.length} messages
+          {room.responses.length} response{room.responses.length !== 1 && "s"}
         </small>
       </div>
     </Link>

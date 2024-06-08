@@ -1,5 +1,6 @@
 import dbConnect from "@/lib/db";
-import { Message, Room } from "@/models";
+import getMuiColor from "@/lib/getMuiColor";
+import { Response, Room } from "@/models";
 import { NextResponse } from "next/server";
 
 export async function POST(req, { params: { id } }) {
@@ -10,7 +11,8 @@ export async function POST(req, { params: { id } }) {
       throw new Error("Invalid fields, Please try again");
     const room = await Room.findById(id);
     if (room) {
-      const createdMessage = await Message.create({
+      const createdResponse = await Response.create({
+        avatarColor: getMuiColor(),
         room: room._id,
         message: data.message,
         likes: 0,
@@ -18,10 +20,10 @@ export async function POST(req, { params: { id } }) {
       });
       const createdRoom = await Room.updateOne(
         { _id: room._id },
-        { $push: { messages: createdMessage._id } }
+        { $push: { responses: createdResponse._id } }
       );
       return NextResponse.json(
-        { createdRoom, createdMessage },
+        { createdRoom, createdResponse },
         { status: 201 }
       );
     } else {
