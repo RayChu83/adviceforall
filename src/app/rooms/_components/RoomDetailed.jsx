@@ -2,7 +2,7 @@
 import "@/app/rooms/[id]/index.css";
 import Image from "next/image";
 import Link from "next/link";
-import { FaAngleLeft } from "react-icons/fa";
+import { FaAngleLeft, FaArrowUp } from "react-icons/fa";
 import {
   Carousel,
   CarouselContent,
@@ -24,13 +24,27 @@ import {
 } from "@/components/ui/dialog";
 import { FaHeart } from "react-icons/fa";
 import { FaReply } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
-import React, { useState } from "react";
-import AddCommentForm from "./AddCommentForm";
+import React, { useRef, useState } from "react";
 
 export default function RoomDetailed({ room, id }) {
-  console.log(room);
+  const inputRef = useRef();
   const [isShowingAll, setIsShowingAll] = useState(false);
+  const [comment, setComment] = useState("");
+  const router = useRouter();
+  const handleSubmit = async (e, id) => {
+    e.preventDefault();
+    const res = await fetch(`/api/responses/${id}/comment`, {
+      method: "post",
+      cache: "no-store",
+      body: JSON.stringify({ comment }),
+    });
+    if (res.ok) {
+      setComment("");
+      router.refresh();
+    }
+  };
   return (
     <div>
       <Link
@@ -110,7 +124,9 @@ export default function RoomDetailed({ room, id }) {
                               </span>
                               <span className="space-y-1">
                                 <small
-                                  className={!isShowingAll && "line-clamp-2"}
+                                  className={
+                                    !isShowingAll ? "line-clamp-2" : ""
+                                  }
                                 >
                                   {response.message}
                                 </small>
@@ -138,6 +154,7 @@ export default function RoomDetailed({ room, id }) {
                                   size="inLine"
                                   variant="none"
                                   className="text-gray-primary flex items-center gap-1"
+                                  onClick={() => inputRef.current.focus()}
                                 >
                                   Reply
                                   <FaReply />
@@ -158,26 +175,16 @@ export default function RoomDetailed({ room, id }) {
                                     </Avatar>
                                     Anonymous
                                   </span>
-                                  <small>{response.message}</small>
-                                  <span className="flex items-center gap-2">
-                                    <Button
-                                      size="inLine"
-                                      variant="none"
-                                      className="text-gray-primary flex items-center gap-1"
-                                    >
-                                      {response.likes} Like
-                                      {response.likes !== 1 && "s"}
-                                      <FaHeart />
-                                    </Button>
-                                    <Button
-                                      size="inLine"
-                                      variant="none"
-                                      className="text-gray-primary flex items-center gap-1"
-                                    >
-                                      Reply
-                                      <FaReply />
-                                    </Button>
-                                  </span>
+                                  <small>{comment.message}</small>
+                                  <Button
+                                    size="inLine"
+                                    variant="none"
+                                    className="text-gray-primary flex items-center gap-1 w-fit"
+                                  >
+                                    {comment.likes} Like
+                                    {comment.likes !== 1 && "s"}
+                                    <FaHeart />
+                                  </Button>
                                 </article>
                               ))
                             ) : (
@@ -196,7 +203,30 @@ export default function RoomDetailed({ room, id }) {
                                 </h3>
                               </section>
                             )}
-                            <AddCommentForm id={response._id} />
+                            <form
+                              onSubmit={(e) => handleSubmit(e, response._id)}
+                              className="flex items-center w-full gap-2 sticky bottom-0"
+                            >
+                              <input
+                                type="text"
+                                placeholder="Reply..."
+                                className={`bg-blue-light p-2 rounded-2xl focus:outline-blue-primary placeholder:text-sm w-full indent-1 ${
+                                  !comment && "animate-bgPulse"
+                                }`}
+                                value={comment}
+                                onChange={(e) => setComment(e.target.value)}
+                                ref={inputRef}
+                              />
+                              <Button
+                                variant="primary"
+                                className={`w-[40px] h-[40px] rounded-full ${
+                                  !comment && "cursor-not-allowed"
+                                }`}
+                                disabled={!comment}
+                              >
+                                <FaArrowUp />
+                              </Button>
+                            </form>
                           </DialogContent>
                         </Dialog>
                       </motion.article>
