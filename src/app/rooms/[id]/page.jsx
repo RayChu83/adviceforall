@@ -10,10 +10,11 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-
-import React from "react";
 import { Avatar } from "@mui/material";
 import { Button } from "@/components/ui/button";
+import AddAdviceForm from "@/app/rooms/_components/AddAdviceForm";
+
+import React from "react";
 
 export default async function RoomDetailedPage({ params }) {
   const res = await fetch(
@@ -30,7 +31,7 @@ export default async function RoomDetailedPage({ params }) {
         <FaAngleLeft />
         Return to All
       </Link>
-      <section className="bg-blue-darker">
+      <section className="bg-blue-darker rounded-md drop-shadow-md overflow-hidden">
         <Image
           src={`https://images.pexels.com/photos/${String(
             room.banner.id
@@ -59,7 +60,7 @@ export default async function RoomDetailedPage({ params }) {
                       key={message._id}
                       className="pl-1 md:basis-1/2 lg:basis-1/3"
                     >
-                      <article className="p-4 flex flex-col gap-2 max-h-[250px] relative bg-gray-800 overflow-y-hidden group rounded-md drop-shadow-md h-full">
+                      <article className="p-4 flex flex-col gap-2 max-h-[250px] relative bg-blue-light overflow-y-hidden group rounded-md drop-shadow-md h-full">
                         <span className="flex items-center gap-2 font-medium">
                           <Avatar>A</Avatar>
                           Anonymous
@@ -83,16 +84,17 @@ export default async function RoomDetailedPage({ params }) {
             <section className="py-5">
               <Image
                 src="/no-advice.svg"
-                width="300"
-                height="300"
+                width="250"
+                height="250"
                 alt="No advice found"
                 className="m-auto mb-3"
               />
-              <h3 className="text-center font-medium">
+              <h3 className="text-center font-medium text-red-500">
                 Oops! Nothing here yet. <br /> Be the first to give some advice.
               </h3>
             </section>
           )}
+          <AddAdviceForm id={params.id} />
         </article>
       </section>
     </div>
