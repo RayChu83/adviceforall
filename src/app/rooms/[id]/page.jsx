@@ -60,7 +60,7 @@ export default async function RoomDetailedPage({ params }) {
                       key={message._id}
                       className="pl-1 md:basis-1/2 lg:basis-1/3"
                     >
-                      <article className="p-4 flex flex-col gap-2 max-h-[250px] relative bg-blue-light overflow-y-hidden group rounded-md drop-shadow-md h-full">
+                      <article className="p-4 flex flex-col gap-2 max-h-[250px] relative bg-blue-light overflow-y-hidden group rounded-md drop-shadow-md h-full background-fade">
                         <span className="flex items-center gap-2 font-medium">
                           <Avatar>A</Avatar>
                           Anonymous
@@ -89,7 +89,7 @@ export default async function RoomDetailedPage({ params }) {
                 alt="No advice found"
                 className="m-auto mb-3"
               />
-              <h3 className="text-center font-medium text-red-500">
+              <h3 className="text-center font-medium text-gray-primary">
                 Oops! Nothing here yet. <br /> Be the first to give some advice.
               </h3>
             </section>

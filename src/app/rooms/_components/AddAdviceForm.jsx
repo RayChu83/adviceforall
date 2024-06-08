@@ -24,7 +24,7 @@ export default function AddAdviceForm({ id }) {
       <input
         type="text"
         placeholder="Give Advice..."
-        className={`bg-blue-light p-2 rounded-2xl focus:outline-blue-primary placeholder:text-sm w-full ${
+        className={`bg-blue-light p-2 rounded-2xl focus:outline-blue-primary placeholder:text-sm w-full indent-1 ${
           !value && "animate-pulse"
         }`}
         value={value}
@@ -32,7 +32,9 @@ export default function AddAdviceForm({ id }) {
       />
       <Button
         variant="primary"
-        className="w-[40px] h-[40px] rounded-full"
+        className={`w-[40px] h-[40px] rounded-full ${
+          !value && "cursor-not-allowed"
+        }`}
         disabled={!value}
       >
         <FaArrowUp />
