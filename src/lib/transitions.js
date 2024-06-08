@@ -8,7 +8,7 @@ export const MULTIDIRECTION_SLIDE_VARIANTS = {
   rightHidden: { opacity: 0, x: "10%" },
 };
 export const FADE_UP_ANIMATION_VARIANTS = {
-  hidden: { opacity: 0, y: 10 },
+  hidden: { opacity: 0, y: 20 },
   show: { opacity: 1, y: 0 },
 };
 export const BLUR_IN = {

@@ -13,7 +13,7 @@ export default function RoomsContainer({ rooms }) {
           <motion.div
             key={index}
             initial="hidden"
-            whileInView="visible"
+            animate="visible"
             exit="hidden"
             variants={GRADUAL}
             transition={{ duration: 0.5, delay: index * 0.1 }}
