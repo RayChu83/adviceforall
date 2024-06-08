@@ -1,29 +1,27 @@
 import dbConnect from "@/lib/db";
 import getMuiColor from "@/lib/getMuiColor";
-import { Response, Room } from "@/models";
+import { Comment, Response } from "@/models";
 import { NextResponse } from "next/server";
 
 export async function POST(req, { params: { id } }) {
   try {
     await dbConnect();
-    const data = await req.json();
-    if (!id || !data.message)
-      throw new Error("Invalid fields, Please try again");
-    const room = await Room.findById(id);
-    if (room) {
-      const createdResponse = await Response.create({
+    const { comment } = await req.json();
+    if (!comment) throw new Error("Invalid fields, Please try again");
+    const response = await Response.findById(id);
+    if (response) {
+      const createdComment = await Comment.create({
+        response: response._id,
         avatarColor: getMuiColor(),
-        room: room._id,
-        message: data.message,
+        message: comment,
         likes: 0,
-        comments: [],
       });
-      const createdRoom = await Room.updateOne(
-        { _id: room._id },
-        { $push: { responses: createdResponse._id } }
+      const updatedResponse = await Response.updateOne(
+        { _id: response._id },
+        { $push: { comments: createdComment._id } }
       );
       return NextResponse.json(
-        { createdRoom, createdResponse },
+        { updatedResponse, createdComment },
         { status: 201 }
       );
     } else {

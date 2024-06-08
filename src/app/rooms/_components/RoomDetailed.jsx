@@ -15,14 +15,22 @@ import { Button } from "@/components/ui/button";
 import AddAdviceForm from "@/app/rooms/_components/AddAdviceForm";
 import { motion } from "framer-motion";
 import { GRADUAL, FADE_UP_ANIMATION_VARIANTS } from "@/lib/transitions";
-import Dialog from "@mui/material/Dialog";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
-
-import React from "react";
 import AnimateUp from "@/app/_components/AnimateUp";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { FaHeart } from "react-icons/fa";
+import { FaReply } from "react-icons/fa";
+
+import React, { useState } from "react";
+import AddCommentForm from "./AddCommentForm";
 
 export default function RoomDetailed({ room, id }) {
+  console.log(room);
+  const [isShowingAll, setIsShowingAll] = useState(false);
   return (
     <div>
       <Link
@@ -67,7 +75,7 @@ export default function RoomDetailed({ room, id }) {
                       className="pl-1 md:basis-1/2 lg:basis-1/3"
                     >
                       <motion.article
-                        className="p-4 flex flex-col gap-2 max-h-[250px] relative bg-blue-light overflow-y-hidden group rounded-md drop-shadow-md h-full background-fade"
+                        className="p-4 flex flex-col gap-2 max-h-[250px] relative bg-blue-light overflow-y-hidden group rounded-md drop-shadow-md h-full"
                         initial="hidden"
                         whileInView="visible"
                         exit="hidden"
@@ -82,12 +90,115 @@ export default function RoomDetailed({ room, id }) {
                           Anonymous
                         </span>
                         <p className="text-fade">{response.message}</p>
-                        <Button
-                          className="absolute bottom-2 left-[47%] transform -translate-x-1/2 group-hover:opacity-100 opacity-0 transition-opacity duration-250 shadow-2xl"
-                          variant="primary"
-                        >
-                          View More
-                        </Button>
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <Button
+                              className="absolute bottom-2 left-[47%] transform -translate-x-1/2 group-hover:opacity-100 opacity-0 transition-opacity duration-250 shadow-2xl"
+                              variant="primary"
+                            >
+                              View More
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent>
+                            <DialogHeader></DialogHeader>
+                            <article className="p-4 flex flex-col gap-2 bg-blue-light rounded-md drop-shadow-md h-full">
+                              <span className="flex items-center gap-2 font-medium">
+                                <Avatar sx={{ bgcolor: response.avatarColor }}>
+                                  A
+                                </Avatar>
+                                Anonymous
+                              </span>
+                              <span className="space-y-1">
+                                <small
+                                  className={!isShowingAll && "line-clamp-2"}
+                                >
+                                  {response.message}
+                                </small>
+                                <small
+                                  onClick={() =>
+                                    setIsShowingAll((prev) => !prev)
+                                  }
+                                  className="text-gray-400 cursor-pointer"
+                                >
+                                  {" "}
+                                  Show {isShowingAll ? "Less" : "More"}
+                                </small>
+                              </span>
+                              <span className="flex items-center gap-2">
+                                <Button
+                                  size="inLine"
+                                  variant="none"
+                                  className="text-gray-primary flex items-center gap-1"
+                                >
+                                  {response.likes} Like
+                                  {response.likes !== 1 && "s"}
+                                  <FaHeart />
+                                </Button>
+                                <Button
+                                  size="inLine"
+                                  variant="none"
+                                  className="text-gray-primary flex items-center gap-1"
+                                >
+                                  Reply
+                                  <FaReply />
+                                </Button>
+                              </span>
+                            </article>
+                            {response.comments.length !== 0 ? (
+                              response.comments.map((comment) => (
+                                <article
+                                  className="p-4 flex flex-col gap-2 rounded-md drop-shadow-md h-full"
+                                  key={comment._id}
+                                >
+                                  <span className="flex items-center gap-2 font-medium">
+                                    <Avatar
+                                      sx={{ bgcolor: comment.avatarColor }}
+                                    >
+                                      A
+                                    </Avatar>
+                                    Anonymous
+                                  </span>
+                                  <small>{response.message}</small>
+                                  <span className="flex items-center gap-2">
+                                    <Button
+                                      size="inLine"
+                                      variant="none"
+                                      className="text-gray-primary flex items-center gap-1"
+                                    >
+                                      {response.likes} Like
+                                      {response.likes !== 1 && "s"}
+                                      <FaHeart />
+                                    </Button>
+                                    <Button
+                                      size="inLine"
+                                      variant="none"
+                                      className="text-gray-primary flex items-center gap-1"
+                                    >
+                                      Reply
+                                      <FaReply />
+                                    </Button>
+                                  </span>
+                                </article>
+                              ))
+                            ) : (
+                              <section className="py-5">
+                                <Image
+                                  src="/no-advice.svg"
+                                  width="250"
+                                  height="250"
+                                  alt="No advice found"
+                                  className="m-auto mb-3"
+                                />
+                                <h3 className="text-center font-medium text-gray-primary">
+                                  Oops! No replies yet.
+                                  <br />
+                                  Be the first to reply to this comment.
+                                </h3>
+                              </section>
+                            )}
+                            <AddCommentForm id={response._id} />
+                          </DialogContent>
+                        </Dialog>
                       </motion.article>
                     </CarouselItem>
                   ))}

@@ -25,10 +25,19 @@ module.exports = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        bgPulse: {
+          "0%, 100%": {
+            backgroundColor: "#2A3653",
+          },
+          "50%": {
+            backgroundColor: "#1E2943",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        bgPulse: "bgPulse 2s infinite",
       },
       colors: {
         blue: {
@@ -47,18 +56,6 @@ module.exports = {
           "0 35px 35px rgba(0, 0, 0, 0.25)",
           "0 45px 65px rgba(0, 0, 0, 0.15)",
         ],
-      },
-      animation: "pulse 2s infinite",
-
-      keyframes: {
-        pulse: {
-          "0%, 100%": {
-            opacity: ".75",
-          },
-          "50%": {
-            opacity: "1",
-          },
-        },
       },
     },
   },

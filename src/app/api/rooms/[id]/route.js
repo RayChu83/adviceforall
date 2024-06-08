@@ -5,7 +5,10 @@ import { NextResponse } from "next/server";
 export async function GET(req, { params: { id } }) {
   try {
     await dbConnect();
-    const room = await Room.findById(id).populate("responses");
+    const room = await Room.findById(id).populate({
+      path: "responses",
+      populate: { path: "comments" },
+    });
     if (!room) throw new Error();
     return NextResponse.json({ room }, { status: 200 });
   } catch (error) {

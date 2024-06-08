@@ -42,10 +42,25 @@ const roomSchema = new Schema(
 const responseSchema = new Schema(
   {
     avatarColor: String,
-    room: SchemaTypes.ObjectId,
+    room: { type: SchemaTypes.ObjectId, ref: "rooms" },
     message: String,
     likes: Number,
-    comments: [],
+    comments: [
+      {
+        type: SchemaTypes.ObjectId,
+        ref: "comments",
+      },
+    ],
+  },
+  { timestamps: true }
+);
+
+const commentSchema = new Schema(
+  {
+    response: { type: SchemaTypes.ObjectId, ref: "responses" },
+    message: String,
+    avatarColor: String,
+    likes: Number,
   },
   { timestamps: true }
 );
@@ -53,3 +68,5 @@ const responseSchema = new Schema(
 export const Room = mongoose.models.rooms || model("rooms", roomSchema);
 export const Response =
   mongoose.models.responses || model("responses", responseSchema);
+export const Comment =
+  mongoose.models.comments || model("comments", commentSchema);

@@ -17,7 +17,7 @@ export default function AddAdviceForm({ id }) {
       cache: "no-store",
       body: JSON.stringify({ message }),
     });
-    if (await res.ok) {
+    if (res.ok) {
       setMessage("");
       router.refresh();
     }
@@ -44,7 +44,7 @@ export default function AddAdviceForm({ id }) {
         type="text"
         placeholder="Give Advice..."
         className={`bg-blue-light p-2 rounded-2xl focus:outline-blue-primary placeholder:text-sm w-full indent-1 ${
-          !message && "animate-pulse"
+          !message && "animate-bgPulse"
         }`}
         value={message}
         onChange={(e) => setMessage(e.target.value)}
