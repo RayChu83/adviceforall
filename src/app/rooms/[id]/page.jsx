@@ -1,37 +1,100 @@
+import "@/app/rooms/[id]/index.css";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FaAngleLeft } from "react-icons/fa";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 import React from "react";
+import { Avatar } from "@mui/material";
+import { Button } from "@/components/ui/button";
 
 export default async function RoomDetailedPage({ params }) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_URL}/api/rooms/${params.id}`
+    `${process.env.NEXT_PUBLIC_URL}/api/rooms/${params.id}`,
+    {
+      cache: "no-store",
+    }
   );
   if (!res.ok) return notFound();
   const { room } = await res.json();
   return (
     <div>
-      <span className="space-y-[6px]">
-        <Link href="/rooms" className="flex items-center gap-[6px]">
-          <FaAngleLeft />
-          Return to All
-        </Link>
+      <Link href="/rooms" className="flex items-center gap-[6px] mb-2">
+        <FaAngleLeft />
+        Return to All
+      </Link>
+      <section className="bg-blue-darker">
         <Image
           src={`https://images.pexels.com/photos/${String(
             room.banner.id
           )}/pexels-photo-${String(
             room.banner.id
-          )}.jpeg?auto=compress&fit=crop&h=300&w=1560`}
+          )}.jpeg?auto=compress&fit=crop&h=400&w=1560`}
           alt={room.banner.alt}
-          width={0}
-          height={0}
-          sizes="100vw"
-          className="w-full h-auto bg-gray-primary"
+          width={1560}
+          height={400}
+          className="bg-gray-primary fade-banner h-400"
           loading="lazy"
         />
-      </span>
+        <article className="p-4">
+          <h3 className="text-xl font-semibold line-clamp-2" title={room.name}>
+            {room.name}
+          </h3>
+          <small className="text-gray-primary">
+            {room.messages.length} messages
+          </small>
+          {room.messages.length ? (
+            <div className="md:w-[90%] w-[80%] m-auto py-5">
+              <Carousel className="w-full">
+                <CarouselContent>
+                  {room.messages.map((message) => (
+                    <CarouselItem
+                      key={message._id}
+                      className="pl-1 md:basis-1/2 lg:basis-1/3"
+                    >
+                      <article className="p-4 flex flex-col gap-2 max-h-[250px] relative bg-gray-800 overflow-y-hidden group rounded-md drop-shadow-md h-full">
+                        <span className="flex items-center gap-2 font-medium">
+                          <Avatar>A</Avatar>
+                          Anonymous
+                        </span>
+                        <p className="text-fade">{message.message}</p>
+                        <Button
+                          className="absolute bottom-2 left-[47%] transform -translate-x-1/2 group-hover:opacity-100 opacity-0 transition-opacity duration-250"
+                          variant="primary"
+                        >
+                          View More
+                        </Button>
+                      </article>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious />
+                <CarouselNext />
+              </Carousel>
+            </div>
+          ) : (
+            <section className="py-5">
+              <Image
+                src="/no-advice.svg"
+                width="300"
+                height="300"
+                alt="No advice found"
+                className="m-auto mb-3"
+              />
+              <h3 className="text-center font-medium">
+                Oops! Nothing here yet. <br /> Be the first to give some advice.
+              </h3>
+            </section>
+          )}
+        </article>
+      </section>
     </div>
   );
 }

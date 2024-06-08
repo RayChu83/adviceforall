@@ -16,7 +16,10 @@ export default function Room({ room }) {
         loading="lazy"
       />
       <div className="p-5">
-        <h3 className="font-semibold text-xl line-clamp-2 group-hover:underline underline-offset-1">
+        <h3
+          className="font-semibold text-xl line-clamp-2 group-hover:underline underline-offset-1"
+          title={room.name}
+        >
           {room.name}
         </h3>
         <small className="text-gray-primary">
