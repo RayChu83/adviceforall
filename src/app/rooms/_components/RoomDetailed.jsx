@@ -28,7 +28,7 @@ import { FaHeart } from "react-icons/fa";
 import { FaReply } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { formatTimestamp } from "../utils";
 
 export default function RoomDetailed({ room, id }) {
@@ -36,6 +36,14 @@ export default function RoomDetailed({ room, id }) {
   const [isShowingAll, setIsShowingAll] = useState(false);
   const [comment, setComment] = useState("");
   const router = useRouter();
+  const [likedResponses, setLikedResponses] = useState([]);
+  const [likedComments, setLikedComments] = useState([]);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setLikedResponses(window.localStorage.getItem("likedResponses") || []);
+      setLikedComments(window.localStorage.getItem("likedComments") || []);
+    }
+  }, []);
   const handleSubmit = async (e, id) => {
     e.preventDefault();
     const res = await fetch(`/api/responses/${id}/comment`, {
@@ -48,14 +56,67 @@ export default function RoomDetailed({ room, id }) {
       router.refresh();
     }
   };
-  const handleLike = async (id, type) => {
-    await fetch(
-      `/api/${type === "comment" ? "comments" : "responses"}/${id}/like`,
+  const toggleLike = async (id, type, event) => {
+    const res = await fetch(
+      `/api/${type === "comment" ? "comments" : "responses"}/${id}/toggleLike`,
       {
         method: "put",
+        body: JSON.stringify({ event }),
       }
     );
-    router.refresh();
+    if (res.ok) {
+      switch (event) {
+        case "like":
+          if (type === "response") {
+            setLikedResponses((prev) => {
+              const updatedLikedResponses = [...prev, id];
+              window.localStorage.setItem(
+                "likedResponses",
+                updatedLikedResponses
+              );
+              return updatedLikedResponses;
+            });
+          } else if (type === "comment") {
+            setLikedComments((prev) => {
+              const updatedLikedComments = [...prev, id];
+              window.localStorage.setItem(
+                "likedComments",
+                updatedLikedComments
+              );
+              return updatedLikedComments;
+            });
+          }
+          break;
+        case "unlike":
+          if (type === "response") {
+            setLikedResponses((prev) => {
+              const updatedLikedResponses = [...prev].filter(
+                (responseId) => responseId !== id
+              );
+              window.localStorage.setItem(
+                "likedResponses",
+                updatedLikedResponses
+              );
+              return updatedLikedResponses;
+            });
+          } else if (type === "comment") {
+            setLikedComments((prev) => {
+              const updatedLikedComments = [...prev].filter(
+                (commentId) => commentId !== id
+              );
+              window.localStorage.setItem(
+                "likedResponses",
+                updatedLikedComments
+              );
+              return updatedLikedComments;
+            });
+          }
+          break;
+        default:
+          break;
+      }
+      router.refresh();
+    }
   };
   return (
     <div>
@@ -170,9 +231,18 @@ export default function RoomDetailed({ room, id }) {
                                 <Button
                                   size="inLine"
                                   variant="none"
-                                  className="text-gray-primary flex items-center gap-1"
+                                  className={`text-gray-primary flex items-center gap-1 ${
+                                    likedResponses?.includes(response._id) &&
+                                    "text-red-500"
+                                  }`}
                                   onClick={() =>
-                                    handleLike(response._id, "response")
+                                    toggleLike(
+                                      response._id,
+                                      "response",
+                                      likedResponses?.includes(response._id)
+                                        ? "unlike"
+                                        : "like"
+                                    )
                                   }
                                 >
                                   <FaHeart />
@@ -213,9 +283,18 @@ export default function RoomDetailed({ room, id }) {
                                   <Button
                                     size="inLine"
                                     variant="none"
-                                    className="text-gray-primary flex items-center gap-1 w-fit"
+                                    className={`text-gray-primary flex items-center gap-1 w-fit ${
+                                      likedComments?.includes(comment._id) &&
+                                      "text-red-500"
+                                    }`}
                                     onClick={() =>
-                                      handleLike(comment._id, "comment")
+                                      toggleLike(
+                                        comment._id,
+                                        "comment",
+                                        likedComments?.includes(comment._id)
+                                          ? "unlike"
+                                          : "like"
+                                      )
                                     }
                                   >
                                     <FaHeart />
