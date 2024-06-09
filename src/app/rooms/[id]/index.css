@@ -8,11 +8,3 @@
   );
   mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
 }
-
-.text-fade {
-  background: -webkit-linear-gradient(#ffffff, #000000);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  position: relative;
-}

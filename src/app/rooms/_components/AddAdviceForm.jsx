@@ -12,7 +12,7 @@ export default function AddAdviceForm({ id }) {
   const router = useRouter();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await fetch(`/api/rooms/${id}/responses`, {
+    const res = await fetch(`/api/rooms/${id}/response`, {
       method: "post",
       cache: "no-store",
       body: JSON.stringify({ message }),

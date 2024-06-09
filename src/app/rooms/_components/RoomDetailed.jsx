@@ -28,6 +28,7 @@ import { FaReply } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 
 import React, { useRef, useState } from "react";
+import { formatTimestamp } from "../utils";
 
 export default function RoomDetailed({ room, id }) {
   const inputRef = useRef();
@@ -78,6 +79,8 @@ export default function RoomDetailed({ room, id }) {
             <small className="text-gray-primary">
               {room.responses.length} response
               {room.responses.length !== 1 && "s"}
+              {" • "}
+              {formatTimestamp(room.createdAt)}
             </small>
           </AnimateUp>
           {room.responses.length ? (
@@ -102,13 +105,18 @@ export default function RoomDetailed({ room, id }) {
                           <Avatar sx={{ bgcolor: response.avatarColor }}>
                             A
                           </Avatar>
-                          Anonymous
+                          <span className="flex flex-col">
+                            Anonymous
+                            <small className="text-gray-primary">
+                              {formatTimestamp(response.createdAt)}
+                            </small>
+                          </span>
                         </span>
-                        <p className="text-fade">{response.message}</p>
+                        <p>{response.message}</p>
                         <Dialog>
                           <DialogTrigger asChild>
                             <Button
-                              className="absolute bottom-2 left-[47%] transform -translate-x-1/2 group-hover:opacity-100 opacity-0 transition-opacity duration-250 shadow-2xl"
+                              className="absolute bottom-2 left-[47%] transform -translate-x-1/2 group-hover:opacity-100 opacity-0 transition-opacity duration-250 drop-shadow-4xl"
                               variant="primary"
                             >
                               View More
@@ -121,7 +129,12 @@ export default function RoomDetailed({ room, id }) {
                                 <Avatar sx={{ bgcolor: response.avatarColor }}>
                                   A
                                 </Avatar>
-                                Anonymous
+                                <span className="flex flex-col">
+                                  Anonymous
+                                  <small className="text-gray-primary">
+                                    {formatTimestamp(response.createdAt)}
+                                  </small>
+                                </span>
                               </span>
                               <span className="space-y-1">
                                 <small
@@ -147,9 +160,9 @@ export default function RoomDetailed({ room, id }) {
                                   variant="none"
                                   className="text-gray-primary flex items-center gap-1"
                                 >
+                                  <FaHeart />
                                   {response.likes} Like
                                   {response.likes !== 1 && "s"}
-                                  <FaHeart />
                                 </Button>
                                 <Button
                                   size="inLine"
@@ -157,8 +170,8 @@ export default function RoomDetailed({ room, id }) {
                                   className="text-gray-primary flex items-center gap-1"
                                   onClick={() => inputRef.current.focus()}
                                 >
-                                  Reply
                                   <FaReply />
+                                  Reply
                                 </Button>
                               </span>
                             </article>
@@ -174,7 +187,12 @@ export default function RoomDetailed({ room, id }) {
                                     >
                                       A
                                     </Avatar>
-                                    Anonymous
+                                    <span className="flex flex-col">
+                                      Anonymous
+                                      <small className="text-gray-primary">
+                                        {formatTimestamp(comment.createdAt)}
+                                      </small>
+                                    </span>
                                   </span>
                                   <small>{comment.message}</small>
                                   <Button
@@ -182,9 +200,9 @@ export default function RoomDetailed({ room, id }) {
                                     variant="none"
                                     className="text-gray-primary flex items-center gap-1 w-fit"
                                   >
+                                    <FaHeart />
                                     {comment.likes} Like
                                     {comment.likes !== 1 && "s"}
-                                    <FaHeart />
                                   </Button>
                                 </article>
                               ))
@@ -204,7 +222,7 @@ export default function RoomDetailed({ room, id }) {
                                 </h3>
                               </section>
                             )}
-                            <DialogFooter className="sticky bottom-0">
+                            <DialogFooter className="sticky bottom-0 drop-shadow-3xl">
                               <form
                                 onSubmit={(e) => handleSubmit(e, response._id)}
                                 className="flex items-center w-full gap-2"
@@ -212,9 +230,7 @@ export default function RoomDetailed({ room, id }) {
                                 <input
                                   type="text"
                                   placeholder="Reply..."
-                                  className={`bg-blue-light p-2 rounded-2xl focus:outline-blue-primary placeholder:text-sm w-full indent-1 ${
-                                    !comment && "animate-bgPulse"
-                                  }`}
+                                  className={`bg-blue-light p-2 rounded-2xl focus:outline-blue-primary placeholder:text-sm w-full indent-1`}
                                   value={comment}
                                   onChange={(e) => setComment(e.target.value)}
                                   ref={inputRef}
