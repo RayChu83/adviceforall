@@ -21,6 +21,7 @@ import {
   DialogContent,
   DialogFooter,
   DialogHeader,
+  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { FaHeart } from "react-icons/fa";
@@ -46,6 +47,15 @@ export default function RoomDetailed({ room, id }) {
       setComment("");
       router.refresh();
     }
+  };
+  const handleLike = async (id, type) => {
+    await fetch(
+      `/api/${type === "comment" ? "comments" : "responses"}/${id}/like`,
+      {
+        method: "put",
+      }
+    );
+    router.refresh();
   };
   return (
     <div>
@@ -123,7 +133,9 @@ export default function RoomDetailed({ room, id }) {
                             </Button>
                           </DialogTrigger>
                           <DialogContent>
-                            <DialogHeader></DialogHeader>
+                            <DialogHeader>
+                              <DialogTitle>User Comments...</DialogTitle>
+                            </DialogHeader>
                             <article className="p-4 flex flex-col gap-2 bg-blue-light rounded-md drop-shadow-md h-full">
                               <span className="flex items-center gap-2 font-medium">
                                 <Avatar sx={{ bgcolor: response.avatarColor }}>
@@ -159,6 +171,9 @@ export default function RoomDetailed({ room, id }) {
                                   size="inLine"
                                   variant="none"
                                   className="text-gray-primary flex items-center gap-1"
+                                  onClick={() =>
+                                    handleLike(response._id, "response")
+                                  }
                                 >
                                   <FaHeart />
                                   {response.likes} Like
@@ -199,6 +214,9 @@ export default function RoomDetailed({ room, id }) {
                                     size="inLine"
                                     variant="none"
                                     className="text-gray-primary flex items-center gap-1 w-fit"
+                                    onClick={() =>
+                                      handleLike(comment._id, "comment")
+                                    }
                                   >
                                     <FaHeart />
                                     {comment.likes} Like
@@ -210,8 +228,8 @@ export default function RoomDetailed({ room, id }) {
                               <section className="py-5">
                                 <Image
                                   src="/no-advice.svg"
-                                  width="250"
-                                  height="250"
+                                  width="200"
+                                  height="200"
                                   alt="No advice found"
                                   className="m-auto mb-3"
                                 />
