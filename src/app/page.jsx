@@ -5,6 +5,10 @@ import AnimateUp from "@/app/_components/AnimateUp";
 import React from "react";
 import PreviewRooms from "./_components/PreviewRooms";
 
+export const metadata = {
+  title: "Landing Page - AdviceForAll",
+};
+
 export default async function LandingPage() {
   return (
     <div className="space-y-10">
