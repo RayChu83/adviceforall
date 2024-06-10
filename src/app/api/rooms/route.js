@@ -3,6 +3,7 @@ import { Room } from "@/models";
 import { NextResponse } from "next/server";
 import { createClient } from "pexels";
 
+export const dynamic = "force-dynamic";
 export async function GET(req) {
   try {
     await dbConnect();

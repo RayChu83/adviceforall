@@ -13,8 +13,8 @@ export default function Navbar() {
     { name: "Home", href: "/" },
     { name: "About", href: "/about" },
     { name: "Rooms", href: "/rooms" },
+    { name: "FAQ's", href: "/faq" },
     { name: "Contact", href: "/contact" },
-    { name: "Register", href: "/register" },
   ];
   return (
     <>
@@ -36,17 +36,11 @@ export default function Navbar() {
           </button>
         ) : (
           <ul className="md:flex hidden gap-5 items-center">
-            {navLinks.map((navLink) =>
-              navLink.name === "Register" ? (
-                <Button variant="primary" key={navLink.href} asChild>
-                  <Link href={navLink.href}>{navLink.name}</Link>
-                </Button>
-              ) : (
-                <li key={navLink.href}>
-                  <Link href={navLink.href}>{navLink.name}</Link>
-                </li>
-              )
-            )}
+            {navLinks.map((navLink) => (
+              <li key={navLink.href}>
+                <Link href={navLink.href}>{navLink.name}</Link>
+              </li>
+            ))}
           </ul>
         )}
         <button

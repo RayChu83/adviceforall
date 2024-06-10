@@ -122,7 +122,7 @@ export default function RoomDetailed({ room, id }) {
     <div>
       <Link
         href="/rooms"
-        className="flex items-center gap-[6px] mb-2 hover:underline underline-offset-1"
+        className="flex items-center gap-[6px] mb-2 hover:underline underline-offset-1 font-medium"
       >
         <FaAngleLeft />
         Return to All
@@ -331,12 +331,11 @@ export default function RoomDetailed({ room, id }) {
                                   value={comment}
                                   onChange={(e) => setComment(e.target.value)}
                                   ref={inputRef}
+                                  required
                                 />
                                 <Button
                                   variant="primary"
-                                  className={`w-[40px] h-[40px] rounded-full ${
-                                    !comment && "cursor-not-allowed"
-                                  }`}
+                                  className="w-[40px] h-[40px] rounded-full disabled:cursor-not-allowed"
                                   disabled={!comment}
                                 >
                                   <FaArrowUp />

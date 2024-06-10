@@ -12,22 +12,39 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { useRouter } from "next/navigation";
 
 import React, { useState } from "react";
 
 export default function RoomsList({ rooms }) {
-  const [appliedFilter, setAppliedFilter] = useState("oldest");
-  const [filteredRooms, setFilteredRooms] = useState(rooms);
-  const [value, setValue] = useState("");
-  function searchFilter(e) {
+  const [searchValue, setSearchValue] = useState("");
+  const [newRoomValue, setNewRoomValue] = useState("");
+  const [dialogOpened, setDialogOpened] = useState(false);
+  const router = useRouter();
+
+  const handleNewRoom = async (e) => {
     e.preventDefault();
-    setFilteredRooms(
-      rooms.filter((room) =>
-        room.name.toLowerCase().includes(value.toLowerCase())
-      )
-    );
-  }
+    if (newRoomValue) {
+      const res = await fetch("/api/rooms", {
+        method: "post",
+        body: JSON.stringify({ name: newRoomValue }),
+      });
+      console.log(res.ok);
+      if (res.ok) {
+        router.refresh();
+        setDialogOpened(false);
+      }
+    }
+  };
+
   const filters = [
     { label: "Most responses", value: "responses" },
     { label: "Most recent", value: "recent" },
@@ -37,7 +54,7 @@ export default function RoomsList({ rooms }) {
     <>
       <AnimateUp>
         <section className="mb-3 flex md:justify-end items-center gap-3">
-          <form onSubmit={searchFilter} className="md:w-fit w-full">
+          <form onSubmit={() => {}} className="md:w-fit w-full">
             <span className="bg-blue-light p-2 rounded-md flex items-center justify-between md:w-fit w-full gap-[6px]">
               <span className="flex items-center gap-[6px] w-full">
                 <DropdownMenu>
@@ -48,15 +65,7 @@ export default function RoomsList({ rooms }) {
                     <DropdownMenuLabel>Sort by...</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     {filters.map((filter, index) => (
-                      <DropdownMenuItem
-                        key={index}
-                        onClick={() => setAppliedFilter(filter.value)}
-                        className={
-                          appliedFilter === filter.value
-                            ? "text-blue-primary font-bold"
-                            : ""
-                        }
-                      >
+                      <DropdownMenuItem key={index} onClick={() => {}}>
                         {filter.label}
                       </DropdownMenuItem>
                     ))}
@@ -66,19 +75,48 @@ export default function RoomsList({ rooms }) {
                   className="bg-transparent outline-none placeholder:text-sm w-full"
                   placeholder="Search..."
                   name="search"
-                  value={value}
-                  onChange={(e) => setValue(e.target.value)}
+                  value={searchValue}
+                  onChange={(e) => setSearchValue(e.target.value)}
                 />
               </span>
-              <IoSearch onClick={searchFilter} className="cursor-pointer" />
+              <IoSearch onClick={() => {}} className="cursor-pointer" />
             </span>
           </form>
-          <Button variant="secondary" asChild>
-            <Link href="/register">New +</Link>
-          </Button>
+          <Dialog open={dialogOpened} onOpenChange={setDialogOpened}>
+            <DialogTrigger asChild>
+              <Button variant="primary">New +</Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Host a room...</DialogTitle>
+                <DialogDescription>
+                  A room is a virtual space where you, as the host, set a prompt
+                  as the title. Users from around the world can view the room to
+                  share their guidance and insights in response.
+                </DialogDescription>
+              </DialogHeader>
+              <form className="space-y-3" onSubmit={handleNewRoom}>
+                <input
+                  type="text"
+                  placeholder="Your prompt..."
+                  className={`bg-blue-light p-2 rounded-md focus:outline-blue-primary placeholder:text-sm w-full indent-1`}
+                  value={newRoomValue}
+                  onChange={(e) => setNewRoomValue(e.target.value)}
+                  required
+                />
+                <Button
+                  variant="primary"
+                  className="w-fit disabled:cursor-not-allowed"
+                  disabled={!newRoomValue}
+                >
+                  Host Now
+                </Button>
+              </form>
+            </DialogContent>
+          </Dialog>
         </section>
       </AnimateUp>
-      <RoomsContainer rooms={filteredRooms} />
+      <RoomsContainer rooms={rooms} />
     </>
   );
 }

@@ -48,13 +48,12 @@ export default function AddAdviceForm({ id }) {
         }`}
         value={message}
         onChange={(e) => setMessage(e.target.value)}
+        required
       />
       <motion.span variants={FADE_UP_ANIMATION_VARIANTS}>
         <Button
           variant="primary"
-          className={`w-[40px] h-[40px] rounded-full ${
-            !message && "cursor-not-allowed"
-          }`}
+          className="w-[40px] h-[40px] rounded-full disabled:cursor-not-allowed"
           disabled={!message}
         >
           <FaArrowUp />

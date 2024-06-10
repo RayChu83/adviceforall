@@ -3,7 +3,7 @@ export default function getBenefits() {
     {
       title: "100% Anonymous",
       description:
-        "With AdviceForAll, you can submit advice completely anonymously, your information will not be tracked or stored. However, to host your own rooms, registration is required. Rest assured, even with an account, your advice remains entirely anonymous.",
+        "With AdviceForAll, you can submit advice and host rooms completely anonymously, your information will not be tracked or stored.",
       imgSrc: "benefit-1.svg",
     },
     {
