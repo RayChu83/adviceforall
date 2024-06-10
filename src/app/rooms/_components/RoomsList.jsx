@@ -22,13 +22,25 @@ import {
 } from "@/components/ui/dialog";
 import { useRouter } from "next/navigation";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function RoomsList({ rooms }) {
+  const [filteredRooms, setFilteredRooms] = useState(rooms);
+  useEffect(() => {
+    setFilteredRooms(rooms);
+  }, [rooms]);
+
   const [searchValue, setSearchValue] = useState("");
   const [newRoomValue, setNewRoomValue] = useState("");
   const [dialogOpened, setDialogOpened] = useState(false);
   const router = useRouter();
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setFilteredRooms(
+      rooms.filter((room) => room.name.toLowerCase().includes(searchValue))
+    );
+  };
 
   const handleNewRoom = async (e) => {
     e.preventDefault();
@@ -54,7 +66,7 @@ export default function RoomsList({ rooms }) {
     <>
       <AnimateUp>
         <section className="mb-3 flex md:justify-end items-center gap-3">
-          <form onSubmit={() => {}} className="md:w-fit w-full">
+          <form onSubmit={handleSearch} className="md:w-fit w-full">
             <span className="bg-blue-light p-2 rounded-md flex items-center justify-between md:w-fit w-full gap-[6px]">
               <span className="flex items-center gap-[6px] w-full">
                 <DropdownMenu>
@@ -79,7 +91,9 @@ export default function RoomsList({ rooms }) {
                   onChange={(e) => setSearchValue(e.target.value)}
                 />
               </span>
-              <IoSearch onClick={() => {}} className="cursor-pointer" />
+              <Button size="inline" variant="none" asChild>
+                <IoSearch onClick={() => {}} className="cursor-pointer" />
+              </Button>
             </span>
           </form>
           <Dialog open={dialogOpened} onOpenChange={setDialogOpened}>
@@ -116,7 +130,7 @@ export default function RoomsList({ rooms }) {
           </Dialog>
         </section>
       </AnimateUp>
-      <RoomsContainer rooms={rooms} />
+      <RoomsContainer rooms={filteredRooms} />
     </>
   );
 }
