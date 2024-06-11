@@ -14,6 +14,8 @@ export default function Room({ room }) {
         sizes="100vw"
         className="w-full h-auto rounded-t-lg bg-gray-primary"
         loading="lazy"
+        placeholder="blur"
+        blurDataURL={room.banner.src.landscapeBlur}
       />
       <div className="p-5">
         <h3

@@ -1,3 +1,4 @@
+import { getBlurredPhoto } from "@/app/actions/getBlurredPhoto";
 import dbConnect from "@/lib/db";
 import { Room } from "@/models";
 import { NextResponse } from "next/server";
@@ -34,11 +35,22 @@ export async function POST(req) {
       query: data.name,
       per_page: 1,
     });
-    const room = await Room.create({ ...data, banner: photos[0] });
-    return NextResponse.json({ room }, { status: 201 });
+    const photo = photos[0];
+    photo.src.panorama = `https://images.pexels.com/photos/${String(
+      photo.id
+    )}/pexels-photo-${String(
+      photo.id
+    )}.jpeg?auto=compress&fit=crop&h=400&w=1560`;
+    [photo.src.landscapeBlur, photo.src.panoramaBlur] = await Promise.all([
+      getBlurredPhoto(photo.src.landscape),
+      getBlurredPhoto(photo.src.panorama),
+    ]);
+
+    const room = await Room.create({ ...data, banner: photo });
+    return NextResponse.json({ photo }, { status: 201 });
   } catch (error) {
     return NextResponse.json(
-      { message: "Something went wrong. Please try again" },
+      { message: error || "Something went wrong. Please try again" },
       { status: 500 }
     );
   }

@@ -130,16 +130,14 @@ export default function RoomDetailed({ room, id }) {
       <section className="bg-blue-darker rounded-md drop-shadow-md overflow-hidden">
         <AnimateUp>
           <Image
-            src={`https://images.pexels.com/photos/${String(
-              room.banner.id
-            )}/pexels-photo-${String(
-              room.banner.id
-            )}.jpeg?auto=compress&fit=crop&h=400&w=1560`}
+            src={room.banner.src.panorama}
             alt={room.banner.alt}
             width={1560}
             height={400}
             className="bg-gray-primary fade-banner h-400"
             loading="lazy"
+            placeholder="blur"
+            blurDataURL={room.banner.src.panoramaBlur}
           />
         </AnimateUp>
         <article className="p-4">
