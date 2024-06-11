@@ -12,7 +12,7 @@ export default function Room({ room }) {
         height={0}
         alt={room.banner.alt}
         sizes="100vw"
-        className="w-full h-auto rounded-t-lg bg-gray-primary"
+        className="w-full h-auto rounded-t-lg bg-gray-primary transition-all duration-1000"
         loading="lazy"
         placeholder="blur"
         blurDataURL={room.banner.src.landscapeBlur}

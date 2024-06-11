@@ -134,7 +134,7 @@ export default function RoomDetailed({ room, id }) {
             alt={room.banner.alt}
             width={1560}
             height={400}
-            className="bg-gray-primary fade-banner h-400"
+            className="bg-gray-primary fade-banner h-400 transition-all duration-1000"
             loading="lazy"
             placeholder="blur"
             blurDataURL={room.banner.src.panoramaBlur}
