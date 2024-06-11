@@ -1,9 +1,9 @@
-import Hero from "@/app/_components/Hero";
-import Benefits from "@/app/_components/Benefits";
+import Hero from "@/app/(landingpage)/_components/Hero";
+import Benefits from "@/app/(landingpage)/_components/Benefits";
 import AnimateUp from "@/app/_components/AnimateUp";
 
 import React from "react";
-import PreviewRooms from "./_components/PreviewRooms";
+import PreviewRooms from "@/app/_components/PreviewRooms";
 
 export const metadata = {
   title: "Landing Page - AdviceForAll",
