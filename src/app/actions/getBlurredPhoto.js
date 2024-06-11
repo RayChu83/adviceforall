@@ -6,6 +6,5 @@ export const getBlurredPhoto = async (photoUrl) => {
   );
 
   const { base64 } = await getPlaiceholder(buffer);
-  console.log(base64);
   return base64;
 };

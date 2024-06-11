@@ -35,7 +35,7 @@ export default function ContactForm() {
       </form>
       <article>
         <h2 className="font-semibold text-2xl">Contact information</h2>
-        <p>
+        <p className="text-sm">
           {location}
           <br />
           {email}
