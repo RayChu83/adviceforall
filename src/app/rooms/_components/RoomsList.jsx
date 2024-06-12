@@ -23,24 +23,19 @@ import {
 import { useRouter } from "next/navigation";
 
 import React, { useEffect, useState, useTransition } from "react";
+import { sortByMostRecent, sortByOldest, sortByResponses } from "../utils";
 
 export default function RoomsList({ rooms }) {
   const [filteredRooms, setFilteredRooms] = useState(rooms);
+  const [currentFilter, setCurrentFilter] = useState("oldest");
   const [isPending, startTransition] = useTransition();
   const [searchValue, setSearchValue] = useState("");
   const [newRoomValue, setNewRoomValue] = useState("");
   const [dialogOpened, setDialogOpened] = useState(false);
   const router = useRouter();
 
-  useEffect(() => {
-    setFilteredRooms(rooms);
-  }, [rooms]);
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-    setFilteredRooms(
-      rooms.filter((room) => room.name.toLowerCase().includes(searchValue))
-    );
+  const handleSearch = (formData) => {
+    setSearchValue(formData.get("search"));
   };
 
   const handleNewRoom = (e) => {
@@ -59,6 +54,34 @@ export default function RoomsList({ rooms }) {
       }
     });
   };
+  useEffect(() => {
+    setFilteredRooms(() => {
+      let updatedRooms = [...rooms];
+
+      // Apply search
+      if (searchValue) {
+        updatedRooms = updatedRooms.filter((room) =>
+          room.name.toLowerCase().includes(searchValue.toLowerCase())
+        );
+      }
+
+      // Apply filter
+      switch (currentFilter) {
+        case "responses":
+          updatedRooms = sortByResponses(updatedRooms);
+          break;
+        case "recent":
+          updatedRooms = sortByMostRecent(updatedRooms, "createdAt");
+          break;
+        case "oldest":
+          updatedRooms = sortByOldest(updatedRooms, "createdAt");
+          break;
+        default:
+          break;
+      }
+      return updatedRooms;
+    });
+  }, [searchValue, currentFilter, rooms]);
 
   const filters = [
     { label: "Most responses", value: "responses" },
@@ -69,7 +92,7 @@ export default function RoomsList({ rooms }) {
     <>
       <AnimateUp>
         <section className="mb-3 flex md:justify-end items-center gap-3">
-          <form onSubmit={handleSearch} className="md:w-fit w-full">
+          <form action={handleSearch} className="md:w-fit w-full">
             <span className="bg-blue-light p-2 rounded-md flex items-center justify-between md:w-fit w-full gap-[6px]">
               <span className="flex items-center gap-[6px] w-full">
                 <DropdownMenu>
@@ -80,7 +103,17 @@ export default function RoomsList({ rooms }) {
                     <DropdownMenuLabel>Sort by...</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     {filters.map((filter, index) => (
-                      <DropdownMenuItem key={index} onClick={() => {}}>
+                      <DropdownMenuItem
+                        key={index}
+                        onClick={() => {
+                          setCurrentFilter(filter.value);
+                        }}
+                        className={
+                          currentFilter === filter.value
+                            ? "text-blue-primary font-medium"
+                            : ""
+                        }
+                      >
                         {filter.label}
                       </DropdownMenuItem>
                     ))}
@@ -90,12 +123,10 @@ export default function RoomsList({ rooms }) {
                   className="bg-transparent outline-none placeholder:text-sm w-full"
                   placeholder="Search..."
                   name="search"
-                  value={searchValue}
-                  onChange={(e) => setSearchValue(e.target.value)}
                 />
               </span>
-              <Button size="inline" variant="none" asChild>
-                <IoSearch onClick={() => {}} className="cursor-pointer" />
+              <Button size="inline" variant="none" asChild type="submit">
+                <IoSearch className="cursor-pointer" />
               </Button>
             </span>
           </form>

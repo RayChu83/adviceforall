@@ -15,19 +15,21 @@ export default function ContactForm() {
   });
   const [isPending, startTransition] = useTransition();
   const { location, email, phone, youtube, tiktok } = getContact();
-  const handleAction = async (e) => {
+  const handleAction = (e) => {
     e.preventDefault();
-    startTransition(() => {
+    startTransition(async () => {
       const [name, email, message] = [
         formData.name,
         formData.email,
         formData.message,
       ];
-      console.log(name, email, message);
-      // const res = await fetch("/api/contact", {
-      //   method: "post",
-      //   body: JSON.stringify({ name, email, message }),
-      // });
+      const res = await fetch("/api/contact", {
+        method: "post",
+        body: JSON.stringify({ name, email, message }),
+      });
+      if (res.ok) {
+        setFormData({ name: "", email: "", message: "" });
+      }
     });
   };
   return (

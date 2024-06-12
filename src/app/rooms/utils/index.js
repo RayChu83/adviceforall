@@ -25,3 +25,19 @@ export const formatTimestamp = (timestamp) => {
 
   return "just now";
 };
+
+export const sortByMostRecent = (array, timeProperty) => {
+  return array.sort(
+    (a, b) => new Date(b[timeProperty]) - new Date(a[timeProperty])
+  );
+};
+
+export const sortByOldest = (array, timeProperty) => {
+  return array.sort(
+    (a, b) => new Date(a[timeProperty]) - new Date(b[timeProperty])
+  );
+};
+
+export const sortByResponses = (rooms) => {
+  return rooms.sort((a, b) => b.responses.length - a.responses.length);
+};
