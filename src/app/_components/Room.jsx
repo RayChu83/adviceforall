@@ -1,3 +1,4 @@
+import { Avatar, AvatarGroup } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -24,7 +25,25 @@ export default function Room({ room }) {
         >
           {room.name}
         </h3>
-        <small className="text-gray-primary">
+        <small className="text-gray-primary flex items-center gap-1">
+          {room.responses.length ? (
+            <AvatarGroup spacing={1} className="avatarGroup">
+              {room.responses.map((response, index) => (
+                <Avatar
+                  key={index}
+                  sx={{
+                    bgcolor: response.avatarColor,
+                    width: 20,
+                    height: 20,
+                    fontSize: "10px",
+                  }}
+                  style={{ border: "none" }}
+                >
+                  A
+                </Avatar>
+              ))}
+            </AvatarGroup>
+          ) : null}
           {room.responses.length} response{room.responses.length !== 1 && "s"}
         </small>
       </div>

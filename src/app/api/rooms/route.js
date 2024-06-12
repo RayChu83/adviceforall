@@ -8,7 +8,9 @@ export const dynamic = "force-dynamic";
 export async function GET(req) {
   try {
     await dbConnect();
-    const rooms = await Room.find();
+    const rooms = await Room.find().populate({
+      path: "responses",
+    });
     return NextResponse.json({ rooms }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
