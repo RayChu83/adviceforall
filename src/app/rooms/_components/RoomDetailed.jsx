@@ -28,96 +28,106 @@ import { FaHeart } from "react-icons/fa";
 import { FaReply } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useTransition } from "react";
 import { formatTimestamp } from "../utils";
 
 export default function RoomDetailed({ room, id }) {
   const inputRef = useRef();
   const [isShowingAll, setIsShowingAll] = useState(false);
   const [comment, setComment] = useState("");
-  const router = useRouter();
   const [likedResponses, setLikedResponses] = useState([]);
   const [likedComments, setLikedComments] = useState([]);
+  const [isPending, startTransition] = useTransition();
+  const router = useRouter();
+  console.log(likedResponses, likedComments);
   useEffect(() => {
     if (typeof window !== "undefined") {
       setLikedResponses(window.localStorage.getItem("likedResponses") || []);
       setLikedComments(window.localStorage.getItem("likedComments") || []);
     }
   }, []);
-  const handleSubmit = async (e, id) => {
+  const handleSubmit = (e, id) => {
     e.preventDefault();
-    const res = await fetch(`/api/responses/${id}/comment`, {
-      method: "post",
-      cache: "no-store",
-      body: JSON.stringify({ comment }),
+    startTransition(async () => {
+      const res = await fetch(`/api/responses/${id}/comment`, {
+        method: "post",
+        cache: "no-store",
+        body: JSON.stringify({ comment }),
+      });
+      if (res.ok) {
+        setComment("");
+        router.refresh();
+      }
     });
-    if (res.ok) {
-      setComment("");
-      router.refresh();
-    }
   };
-  const toggleLike = async (id, type, event) => {
-    const res = await fetch(
-      `/api/${type === "comment" ? "comments" : "responses"}/${id}/toggleLike`,
-      {
-        method: "put",
-        body: JSON.stringify({ event }),
+  const toggleLike = (id, type, event) => {
+    startTransition(async () => {
+      const res = await fetch(
+        `/api/${
+          type === "comment" ? "comments" : "responses"
+        }/${id}/toggleLike`,
+        {
+          method: "PUT",
+          body: JSON.stringify({ event }),
+        }
+      );
+
+      if (res.ok) {
+        switch (event) {
+          case "like":
+            if (type === "response") {
+              setLikedResponses((prev) => {
+                const updatedLikedResponses = [...prev, id];
+                window.localStorage.setItem(
+                  "likedResponses",
+                  JSON.stringify(updatedLikedResponses)
+                );
+                return updatedLikedResponses;
+              });
+            } else if (type === "comment") {
+              setLikedComments((prev) => {
+                const updatedLikedComments = [...prev, id];
+                window.localStorage.setItem(
+                  "likedComments",
+                  JSON.stringify(updatedLikedComments)
+                );
+                return updatedLikedComments;
+              });
+            }
+            break;
+          case "unlike":
+            if (type === "response") {
+              setLikedResponses((prev) => {
+                const updatedLikedResponses = prev.filter(
+                  (responseId) => responseId !== id
+                );
+                window.localStorage.setItem(
+                  "likedResponses",
+                  JSON.stringify(updatedLikedResponses)
+                );
+                return updatedLikedResponses;
+              });
+            } else if (type === "comment") {
+              setLikedComments((prev) => {
+                const updatedLikedComments = prev.filter(
+                  (commentId) => commentId !== id
+                );
+                window.localStorage.setItem(
+                  "likedComments",
+                  JSON.stringify(updatedLikedComments)
+                );
+                return updatedLikedComments;
+              });
+            }
+            break;
+          default:
+            break;
+        }
+        router.refresh();
       }
-    );
-    if (res.ok) {
-      switch (event) {
-        case "like":
-          if (type === "response") {
-            setLikedResponses((prev) => {
-              const updatedLikedResponses = [...prev, id];
-              window.localStorage.setItem(
-                "likedResponses",
-                updatedLikedResponses
-              );
-              return updatedLikedResponses;
-            });
-          } else if (type === "comment") {
-            setLikedComments((prev) => {
-              const updatedLikedComments = [...prev, id];
-              window.localStorage.setItem(
-                "likedComments",
-                updatedLikedComments
-              );
-              return updatedLikedComments;
-            });
-          }
-          break;
-        case "unlike":
-          if (type === "response") {
-            setLikedResponses((prev) => {
-              const updatedLikedResponses = [...prev].filter(
-                (responseId) => responseId !== id
-              );
-              window.localStorage.setItem(
-                "likedResponses",
-                updatedLikedResponses
-              );
-              return updatedLikedResponses;
-            });
-          } else if (type === "comment") {
-            setLikedComments((prev) => {
-              const updatedLikedComments = [...prev].filter(
-                (commentId) => commentId !== id
-              );
-              window.localStorage.setItem(
-                "likedResponses",
-                updatedLikedComments
-              );
-              return updatedLikedComments;
-            });
-          }
-          break;
-        default:
-          break;
-      }
-      router.refresh();
-    }
+    });
   };
+
   return (
     <div>
       <Link
@@ -242,6 +252,7 @@ export default function RoomDetailed({ room, id }) {
                                         : "like"
                                     )
                                   }
+                                  disabled={isPending}
                                 >
                                   <FaHeart />
                                   {response.likes} Like
@@ -294,6 +305,7 @@ export default function RoomDetailed({ room, id }) {
                                           : "like"
                                       )
                                     }
+                                    disabled={isPending}
                                   >
                                     <FaHeart />
                                     {comment.likes} Like
@@ -334,7 +346,7 @@ export default function RoomDetailed({ room, id }) {
                                 <Button
                                   variant="primary"
                                   className="w-[40px] h-[40px] rounded-full disabled:cursor-not-allowed"
-                                  disabled={!comment}
+                                  disabled={!comment || isPending}
                                 >
                                   <FaArrowUp />
                                 </Button>

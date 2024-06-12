@@ -5,22 +5,25 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { FADE_UP_ANIMATION_VARIANTS } from "@/lib/transitions";
 
-import React, { useState } from "react";
+import React, { useState, useTransition } from "react";
 
 export default function AddAdviceForm({ id }) {
   const [message, setMessage] = useState("");
+  const [isPending, startTransition] = useTransition();
   const router = useRouter();
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const res = await fetch(`/api/rooms/${id}/response`, {
-      method: "post",
-      cache: "no-store",
-      body: JSON.stringify({ message }),
+    startTransition(async () => {
+      const res = await fetch(`/api/rooms/${id}/response`, {
+        method: "post",
+        cache: "no-store",
+        body: JSON.stringify({ message }),
+      });
+      if (res.ok) {
+        setMessage("");
+        router.refresh();
+      }
     });
-    if (res.ok) {
-      setMessage("");
-      router.refresh();
-    }
   };
   return (
     <motion.form
@@ -54,7 +57,7 @@ export default function AddAdviceForm({ id }) {
         <Button
           variant="primary"
           className="w-[40px] h-[40px] rounded-full disabled:cursor-not-allowed"
-          disabled={!message}
+          disabled={!message || isPending}
         >
           <FaArrowUp />
         </Button>

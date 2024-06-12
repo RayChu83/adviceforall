@@ -22,18 +22,19 @@ import {
 } from "@/components/ui/dialog";
 import { useRouter } from "next/navigation";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 
 export default function RoomsList({ rooms }) {
   const [filteredRooms, setFilteredRooms] = useState(rooms);
-  useEffect(() => {
-    setFilteredRooms(rooms);
-  }, [rooms]);
-
+  const [isPending, startTransition] = useTransition();
   const [searchValue, setSearchValue] = useState("");
   const [newRoomValue, setNewRoomValue] = useState("");
   const [dialogOpened, setDialogOpened] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    setFilteredRooms(rooms);
+  }, [rooms]);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -42,19 +43,21 @@ export default function RoomsList({ rooms }) {
     );
   };
 
-  const handleNewRoom = async (e) => {
+  const handleNewRoom = (e) => {
     e.preventDefault();
-    if (newRoomValue) {
-      const res = await fetch("/api/rooms", {
-        method: "post",
-        body: JSON.stringify({ name: newRoomValue }),
-      });
-      console.log(res.ok);
-      if (res.ok) {
-        router.refresh();
-        setDialogOpened(false);
+    startTransition(async () => {
+      if (newRoomValue) {
+        const res = await fetch("/api/rooms", {
+          method: "post",
+          body: JSON.stringify({ name: newRoomValue }),
+        });
+        if (res.ok) {
+          router.refresh();
+          setDialogOpened(false);
+          setNewRoomValue("");
+        }
       }
-    }
+    });
   };
 
   const filters = [
@@ -121,7 +124,7 @@ export default function RoomsList({ rooms }) {
                 <Button
                   variant="primary"
                   className="w-fit disabled:cursor-not-allowed"
-                  disabled={!newRoomValue}
+                  disabled={!newRoomValue || isPending}
                 >
                   Host Now
                 </Button>

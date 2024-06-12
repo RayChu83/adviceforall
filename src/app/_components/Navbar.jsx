@@ -24,7 +24,7 @@ export default function Navbar() {
           className="flex items-center gap-2 text-2xl font-bold"
           onClick={() => setIsNavOpen(false)}
         >
-          <BiWorld className="text-3xl " />
+          <BiWorld className="text-3xl" />
           AdviceForAll
         </Link>
         {isNavOpen ? (

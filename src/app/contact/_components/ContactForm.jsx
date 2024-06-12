@@ -1,35 +1,79 @@
+"use client";
 import getContact from "@/lib/getContact";
 import Link from "next/link";
 import { FaTiktok, FaYoutube } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
-import React from "react";
+import React, { useState, useTransition } from "react";
 
 export default function ContactForm() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+  const [isPending, startTransition] = useTransition();
   const { location, email, phone, youtube, tiktok } = getContact();
+  const handleAction = async (e) => {
+    e.preventDefault();
+    startTransition(() => {
+      const [name, email, message] = [
+        formData.name,
+        formData.email,
+        formData.message,
+      ];
+      console.log(name, email, message);
+      // const res = await fetch("/api/contact", {
+      //   method: "post",
+      //   body: JSON.stringify({ name, email, message }),
+      // });
+    });
+  };
   return (
     <div className="md:grid grid-cols-2 flex flex-col-reverse max-w-[864px] p-8 m-auto gap-8 bg-blue-darker drop-shadow-md rounded-md">
-      <form className="rounded-md flex flex-col gap-2">
+      <form className="rounded-md flex flex-col gap-2" onSubmit={handleAction}>
         <h2 className="font-semibold text-2xl">Contact form</h2>
         <input
+          name="name"
           type="text"
           className="bg-blue-light p-2 rounded-md focus:outline-blue-primary placeholder:text-sm"
           placeholder="Full Name"
+          value={formData.name}
+          onChange={(e) =>
+            setFormData((prev) => ({
+              ...prev,
+              [e.target.name]: e.target.value,
+            }))
+          }
         />
         <input
+          name="email"
           type="text"
           className="bg-blue-light p-2 rounded-md focus:outline-blue-primary placeholder:text-sm"
           placeholder="Email Address"
+          value={formData.email}
+          onChange={(e) =>
+            setFormData((prev) => ({
+              ...prev,
+              [e.target.name]: e.target.value,
+            }))
+          }
         />
         <textarea
-          name=""
-          id=""
+          name="message"
           className="bg-blue-light p-2 rounded-md focus:outline-blue-primary placeholder:text-sm"
           rows={8}
           placeholder="Message"
+          value={formData.message}
+          onChange={(e) =>
+            setFormData((prev) => ({
+              ...prev,
+              [e.target.name]: e.target.value,
+            }))
+          }
         ></textarea>
-        <Button variant="primary" className="w-fit">
+        <Button variant="primary" className="w-fit" disabled={isPending}>
           Submit
         </Button>
       </form>
