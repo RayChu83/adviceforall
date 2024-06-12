@@ -4,10 +4,13 @@ import { BiWorld } from "react-icons/bi";
 import { FaBars } from "react-icons/fa";
 import Link from "next/link";
 import { IoClose } from "react-icons/io5";
+import { usePathname } from "next/navigation";
 
 import React, { useState } from "react";
 
 export default function Navbar() {
+  const pathname = usePathname();
+  console.log(pathname);
   const [isNavOpen, setIsNavOpen] = useState(false);
   const navLinks = [
     { name: "Home", href: "/" },
@@ -38,7 +41,15 @@ export default function Navbar() {
           <ul className="md:flex hidden gap-5 items-center">
             {navLinks.map((navLink) => (
               <li key={navLink.href}>
-                <Link href={navLink.href}>{navLink.name}</Link>
+                <Link
+                  href={navLink.href}
+                  className={`${
+                    navLink.href === pathname &&
+                    "font-semibold underline underline-offset-2"
+                  } transition-all duration-200`}
+                >
+                  {navLink.name}
+                </Link>
               </li>
             ))}
           </ul>

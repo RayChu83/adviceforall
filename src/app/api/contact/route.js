@@ -19,7 +19,6 @@ export async function POST(req) {
       subject: "AdviceForAll - Contact Form Submission",
       react: EmailTemplate({ name, email, message }),
     });
-    console.log(error);
     if (error) {
       return Response.json({ error }, { status: 500 });
     }

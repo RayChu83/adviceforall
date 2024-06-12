@@ -10,7 +10,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Avatar } from "@mui/material";
+import { Avatar, AvatarGroup } from "@mui/material";
 import { Button } from "@/components/ui/button";
 import AddAdviceForm from "@/app/rooms/_components/AddAdviceForm";
 import { motion } from "framer-motion";
@@ -27,9 +27,10 @@ import {
 import { FaHeart } from "react-icons/fa";
 import { FaReply } from "react-icons/fa";
 import { useRouter } from "next/navigation";
+import { formatTimestamp } from "../utils";
+import RoomAvatars from "@/app/_components/RoomAvatars";
 
 import React, { useEffect, useRef, useState, useTransition } from "react";
-import { formatTimestamp } from "../utils";
 
 export default function RoomDetailed({ room, id }) {
   const inputRef = useRef();
@@ -39,7 +40,6 @@ export default function RoomDetailed({ room, id }) {
   const [likedComments, setLikedComments] = useState([]);
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
-  console.log(likedResponses, likedComments);
   useEffect(() => {
     if (typeof window !== "undefined") {
       setLikedResponses(window.localStorage.getItem("likedResponses") || []);
@@ -155,7 +155,8 @@ export default function RoomDetailed({ room, id }) {
             <h3 className="text-xl font-semibold" title={room.name}>
               {room.name}
             </h3>
-            <small className="text-gray-primary">
+            <small className="text-gray-primary flex items-center gap-1">
+              {room.responses.length ? <RoomAvatars room={room} /> : null}
               {room.responses.length} response
               {room.responses.length !== 1 && "s"}
               {" • "}

@@ -3,7 +3,7 @@ export default function getContact() {
     location: "New York, NY",
     email: "contactadviceforall@gmail.com",
     phone: "646-925-0205",
-    youtube: "https://www.youtube.com/",
-    tiktok: "https://www.tiktok.com/",
+    youtube: "https://www.youtube.com/@officialadviceforall",
+    tiktok: "https://www.tiktok.com/@adviceforall.org",
   };
 }

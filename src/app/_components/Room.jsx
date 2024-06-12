@@ -1,6 +1,6 @@
-import { Avatar, AvatarGroup } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
+import RoomAvatars from "@/app/_components/RoomAvatars";
 
 import React from "react";
 
@@ -9,11 +9,10 @@ export default function Room({ room }) {
     <Link key={room._id} href={`/rooms/${room._id}`}>
       <Image
         src={room.banner.src.landscape}
-        width={0}
-        height={0}
+        width={493}
+        height={257}
         alt={room.banner.alt}
-        sizes="100vw"
-        className="w-full h-auto rounded-t-lg bg-gray-primary transition-all duration-1000"
+        className="rounded-t-lg bg-gray-primary transition-all duration-1000"
         loading="lazy"
         placeholder="blur"
         blurDataURL={room.banner.src.landscapeBlur}
@@ -26,24 +25,7 @@ export default function Room({ room }) {
           {room.name}
         </h3>
         <small className="text-gray-primary flex items-center gap-1">
-          {room.responses.length ? (
-            <AvatarGroup spacing={1} className="avatarGroup">
-              {room.responses.map((response, index) => (
-                <Avatar
-                  key={index}
-                  sx={{
-                    bgcolor: response.avatarColor,
-                    width: 20,
-                    height: 20,
-                    fontSize: "10px",
-                  }}
-                  style={{ border: "none" }}
-                >
-                  A
-                </Avatar>
-              ))}
-            </AvatarGroup>
-          ) : null}
+          {room.responses.length ? <RoomAvatars room={room} /> : null}
           {room.responses.length} response{room.responses.length !== 1 && "s"}
         </small>
       </div>

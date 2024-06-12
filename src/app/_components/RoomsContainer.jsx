@@ -7,7 +7,6 @@ import React from "react";
 import Image from "next/image";
 
 export default function RoomsContainer({ rooms }) {
-  console.log(rooms);
   return (
     <>
       {rooms.length ? (
