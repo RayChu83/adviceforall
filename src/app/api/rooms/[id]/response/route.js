@@ -17,10 +17,8 @@ export async function POST(req, { params: { id } }) {
         likes: 0,
         comments: [],
       });
-      const updatedRoom = await Room.updateOne(
-        { _id: room._id },
-        { $push: { responses: createdResponse._id } }
-      );
+      room.responses.unshift(createdResponse._id);
+      let updatedRoom = room.save();
       return NextResponse.json(
         { updatedRoom, createdResponse },
         { status: 201 }

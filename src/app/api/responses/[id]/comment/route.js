@@ -16,10 +16,8 @@ export async function POST(req, { params: { id } }) {
         message: comment,
         likes: 0,
       });
-      const updatedResponse = await Response.updateOne(
-        { _id: response._id },
-        { $push: { comments: createdComment._id } }
-      );
+      response.comments.unshift(createdComment._id);
+      let updatedResponse = response.save();
       return NextResponse.json(
         { updatedResponse, createdComment },
         { status: 201 }
