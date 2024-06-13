@@ -7,13 +7,10 @@ import {
   Html,
   Link,
   Body,
+  Img,
 } from "@react-email/components";
 
 export default function EmailTemplate({ name, email, message }) {
-  name = "Ray Chu";
-  email = "rayc12079@gmail.com";
-  message =
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia expedita libero hic facilis molestias, magni veritatis nihil, eius in sapiente assumenda sint.";
   return (
     <Html lang="en">
       <Head>
@@ -42,22 +39,31 @@ export default function EmailTemplate({ name, email, message }) {
         >
           <Body className="p-2">
             <main className="max-w-[1280px] p-4 m-auto outline outline-1">
-              <nav>
+              <nav className="flex items-center gap-2">
+                <Img
+                  src="https://www.adviceforall.org/adviceforallicon.png"
+                  height={35}
+                  width={35}
+                />
                 <Text className="flex items-center gap-2 text-2xl font-bold">
                   AdviceForAll
                 </Text>
               </nav>
               <Text className="text-2xl font-medium">
                 You got a new message from{" "}
-                <text className="font-semibold">{name}</text>:
+                <span className="font-semibold">{name}</span>
               </Text>
-              <Text className="text-gray-primary">Sent by: {email}</Text>
-              <Text>{message}</Text>
+              <Text className="text-gray-primary">
+                Sent by: <span className="font-semibold">{email}</span>
+              </Text>
+              <Text>
+                Message: <span className="font-semibold">{message}</span>
+              </Text>
               <Link
                 className="bg-black p-2 rounded-md text-white"
                 href={`mailto:${email}`}
               >
-                Send email
+                Reply back
               </Link>
             </main>
           </Body>

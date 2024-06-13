@@ -1,5 +1,4 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import { BiWorld } from "react-icons/bi";
 import { FaBars } from "react-icons/fa";
 import Link from "next/link";
@@ -10,7 +9,6 @@ import React, { useState } from "react";
 
 export default function Navbar() {
   const pathname = usePathname();
-  console.log(pathname);
   const [isNavOpen, setIsNavOpen] = useState(false);
   const navLinks = [
     { name: "Home", href: "/" },

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { FaTiktok, FaYoutube } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { useToast } from "@/components/ui/use-toast";
 
 import React, { useState, useTransition } from "react";
 
@@ -13,6 +14,7 @@ export default function ContactForm() {
     email: "",
     message: "",
   });
+  const { toast } = useToast();
   const [isPending, startTransition] = useTransition();
   const { location, email, phone, youtube, tiktok } = getContact();
   const handleAction = (e) => {
@@ -29,6 +31,16 @@ export default function ContactForm() {
       });
       if (res.ok) {
         setFormData({ name: "", email: "", message: "" });
+        toast({
+          title: "Success!",
+          description:
+            "Successfully sent! We will get back as soon as possible.",
+        });
+      } else {
+        toast({
+          title: "Error!",
+          description: "Something went wrong. Please try again!",
+        });
       }
     });
   };

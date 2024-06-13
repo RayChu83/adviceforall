@@ -14,7 +14,7 @@ export async function POST(req) {
       );
     }
     const { data, error } = await resend.emails.send({
-      from: "Contact <contactadviceforall@gmail.com>",
+      from: "Contact <noreply@adviceforall.org>",
       to: process.env.PERSONAL_EMAIL,
       subject: "AdviceForAll - Contact Form Submission",
       react: EmailTemplate({ name, email, message }),
@@ -25,7 +25,7 @@ export async function POST(req) {
     return Response.json(data, { status: 200 });
   } catch (error) {
     return NextResponse.json(
-      { message: error.message || "Something went wrong. Please try again" },
+      { message: error.message || "Something went wrong. Please try again!" },
       { status: 500 }
     );
   }

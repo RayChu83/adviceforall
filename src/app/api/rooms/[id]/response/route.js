@@ -33,7 +33,7 @@ export async function POST(req, { params: { id } }) {
     }
   } catch (error) {
     return NextResponse.json(
-      { message: error.message || "Something went wrong. Please try again" },
+      { message: error.message || "Something went wrong. Please try again!" },
       { status: 500 }
     );
   }

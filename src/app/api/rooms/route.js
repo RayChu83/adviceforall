@@ -14,7 +14,7 @@ export async function GET(req) {
     return NextResponse.json({ rooms }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
-      { message: "Something went wrong. Please try again" },
+      { message: "Something went wrong. Please try again!" },
       { status: 500 }
     );
   }
@@ -52,7 +52,7 @@ export async function POST(req) {
     return NextResponse.json({ photo }, { status: 201 });
   } catch (error) {
     return NextResponse.json(
-      { message: error || "Something went wrong. Please try again" },
+      { message: error || "Something went wrong. Please try again!" },
       { status: 500 }
     );
   }

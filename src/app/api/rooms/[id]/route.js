@@ -13,7 +13,7 @@ export async function GET(req, { params: { id } }) {
     return NextResponse.json({ room }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
-      { message: "Something went wrong. Please try again" },
+      { message: "Something went wrong. Please try again!" },
       { status: 500 }
     );
   }
