@@ -67,21 +67,19 @@ export default function Navbar() {
         } w-full overflow-y-auto text-center drop-shadow-md transition-left duration-200 z-10 flex justify-center items-center`}
       >
         <ul className="flex flex-col gap-5 items-center justify-center">
-          {navLinks.map((navLink) =>
-            navLink.name === "Register" ? (
-              <Button
-                variant="primary"
-                key={navLink.href}
-                onClick={() => setIsNavOpen(false)}
+          {navLinks.map((navLink) => (
+            <li key={navLink.href} onClick={() => setIsNavOpen(false)}>
+              <Link
+                href={navLink.href}
+                className={`${
+                  navLink.href === pathname &&
+                  "font-semibold underline underline-offset-2"
+                } transition-all duration-200`}
               >
-                <Link href={navLink.href}>{navLink.name}</Link>
-              </Button>
-            ) : (
-              <li key={navLink.href} onClick={() => setIsNavOpen(false)}>
-                <Link href={navLink.href}>{navLink.name}</Link>
-              </li>
-            )
-          )}
+                {navLink.name}
+              </Link>
+            </li>
+          ))}
         </ul>
       </div>
     </>
