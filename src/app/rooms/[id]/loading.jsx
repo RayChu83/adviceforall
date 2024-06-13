@@ -4,6 +4,12 @@ import React from "react";
 export default function RoomDetailLoading() {
   return (
     <section className="overflow-hidden">
+      <Skeleton
+        variant="text"
+        sx={{ fontSize: "1.5rem" }}
+        width={120}
+        className="mb-1"
+      />
       <Skeleton variant="rounded" width={1520} height={390} />
       <Skeleton variant="text" sx={{ fontSize: "1.5rem" }} />
       <Skeleton width="30%" />

@@ -132,7 +132,7 @@ export default function RoomDetailed({ room, id }) {
     <div>
       <Link
         href="/rooms"
-        className="flex items-center gap-[6px] mb-2 hover:underline underline-offset-1 font-medium"
+        className="flex items-center gap-[6px] mb-2 hover:underline underline-offset-1 font-medium w-fit"
       >
         <FaAngleLeft />
         Return to All
