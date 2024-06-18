@@ -1,11 +1,11 @@
 "use client";
-import { BiWorld } from "react-icons/bi";
 import { FaBars } from "react-icons/fa";
 import Link from "next/link";
 import { IoClose } from "react-icons/io5";
 import { usePathname } from "next/navigation";
 
 import React, { useState } from "react";
+import Image from "next/image";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -25,7 +25,12 @@ export default function Navbar() {
           className="flex items-center gap-2 text-2xl font-bold"
           onClick={() => setIsNavOpen(false)}
         >
-          <BiWorld className="text-3xl" />
+          <Image
+            src="/adviceforallicon.png"
+            width={40}
+            height={40}
+            alt="logo"
+          />
           AdviceForAll
         </Link>
         {isNavOpen ? (
@@ -42,8 +47,7 @@ export default function Navbar() {
                 <Link
                   href={navLink.href}
                   className={`${
-                    navLink.href === pathname &&
-                    "font-semibold underline underline-offset-2"
+                    navLink.href === pathname && "font-semibold"
                   } transition-all duration-200`}
                 >
                   {navLink.name}
@@ -70,8 +74,7 @@ export default function Navbar() {
               <Link
                 href={navLink.href}
                 className={`${
-                  navLink.href === pathname &&
-                  "font-semibold underline underline-offset-2"
+                  navLink.href === pathname && "font-semibold"
                 } transition-all duration-200`}
               >
                 {navLink.name}

@@ -4,8 +4,8 @@ import React from "react";
 
 export default function RoomAvatars({ room }) {
   return (
-    <AvatarGroup spacing={1} className="avatarGroup">
-      {room.responses.map((response, index) => (
+    <AvatarGroup spacing={1} className="">
+      {room.responses.slice(0, 3).map((response, index) => (
         <Avatar
           key={index}
           sx={{

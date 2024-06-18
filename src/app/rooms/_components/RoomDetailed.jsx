@@ -204,7 +204,7 @@ export default function RoomDetailed({ room, id }) {
                           </DialogTrigger>
                           <DialogContent>
                             <DialogHeader>
-                              <DialogTitle>User Comments...</DialogTitle>
+                              <DialogTitle>User Insights:</DialogTitle>
                             </DialogHeader>
                             <article className="p-4 flex flex-col gap-2 bg-blue-light rounded-md drop-shadow-md h-full">
                               <span className="flex items-center gap-2 font-medium">
@@ -219,13 +219,13 @@ export default function RoomDetailed({ room, id }) {
                                 </span>
                               </span>
                               <span className="space-y-1">
-                                <small
+                                <p
                                   className={
                                     !isShowingAll ? "line-clamp-2" : ""
                                   }
                                 >
                                   {response.message}
-                                </small>
+                                </p>
                                 <small
                                   onClick={() =>
                                     setIsShowingAll((prev) => !prev)
@@ -317,7 +317,7 @@ export default function RoomDetailed({ room, id }) {
                             ) : (
                               <section className="py-5">
                                 <Image
-                                  src="/no-advice.svg"
+                                  src="/add-notes.svg"
                                   width="200"
                                   height="200"
                                   alt="No advice found"
@@ -380,7 +380,7 @@ export default function RoomDetailed({ room, id }) {
             >
               <motion.img
                 variants={FADE_UP_ANIMATION_VARIANTS}
-                src="/no-advice.svg"
+                src="/add-notes.svg"
                 width="250"
                 height="250"
                 alt="No advice found"

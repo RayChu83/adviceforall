@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-import { BiWorld } from "react-icons/bi";
 import { FaQuestion } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
 import { FaTiktok } from "react-icons/fa6";
@@ -9,6 +8,7 @@ import { motion } from "framer-motion";
 import { FADE_UP_ANIMATION_VARIANTS } from "@/lib/transitions";
 
 import React from "react";
+import Image from "next/image";
 
 export default function Footer() {
   const { email, phone, youtube, tiktok } = getContact();
@@ -30,7 +30,7 @@ export default function Footer() {
       </div>
       <footer className="p-10 bg-blue-darker">
         <motion.span
-          className="max-w-[1560px] m-auto flex md:justify-between justify-center items-start gap-5 flex-wrap"
+          className="max-w-[1560px] m-auto flex justify-between md:items-start items-center gap-5 md:flex-row flex-col"
           initial="hidden"
           whileInView="show"
           variants={FADE_UP_ANIMATION_VARIANTS}
@@ -39,7 +39,12 @@ export default function Footer() {
         >
           <article className="space-y-1">
             <h3 className="flex items-center gap-2 text-2xl font-bold md:justify-start justify-center">
-              <BiWorld className="text-3xl " />
+              <Image
+                src="/adviceforallicon.png"
+                width={40}
+                height={40}
+                alt="logo"
+              />
               AdviceForAll
             </h3>
             <p className="text-gray-primary">

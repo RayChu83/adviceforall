@@ -29,7 +29,7 @@ export default function RoomsContainer({ rooms }) {
       ) : (
         <section className="flex justify-center gap-2 flex-col m-auto text-center items-center h-[75vh]">
           <Image
-            src="/room-not-found.svg"
+            src="/empty.svg"
             alt="Room not found"
             width="250"
             height="250"

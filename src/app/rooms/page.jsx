@@ -13,6 +13,7 @@ export default async function RoomsPage() {
     method: "get",
     cache: "no-store",
   });
+  if (!res.ok) throw new Error("Rooms failed to fetch.");
   const { rooms } = await res.json();
   return <>{rooms && <RoomsList rooms={rooms} />}</>;
 }

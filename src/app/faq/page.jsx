@@ -38,7 +38,7 @@ export default function FaqPage() {
         </motion.h1>
         <motion.p variants={FADE_UP_ANIMATION_VARIANTS}>
           Looking for our contact information? Check it out{" "}
-          <Link href="/contact" className="text-blue-primary">
+          <Link href="/contact" className="text-blue-primary font-medium">
             here
           </Link>
         </motion.p>

@@ -157,7 +157,7 @@ export default function RoomsList({ rooms }) {
                   className="w-fit disabled:cursor-not-allowed"
                   disabled={!newRoomValue || isPending}
                 >
-                  Host Now
+                  {isPending ? "Hosting..." : "Host room"}
                 </Button>
               </form>
             </DialogContent>

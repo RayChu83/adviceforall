@@ -31,7 +31,7 @@ export default function ContactPage() {
         </motion.h1>
         <motion.p variants={FADE_UP_ANIMATION_VARIANTS}>
           Want to view our frequently asked questions? Check it out{" "}
-          <Link href="/faq" className="text-blue-primary">
+          <Link href="/faq" className="text-blue-primary font-medium">
             here
           </Link>
         </motion.p>

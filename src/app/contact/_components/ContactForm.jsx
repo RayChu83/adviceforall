@@ -88,7 +88,7 @@ export default function ContactForm() {
           }
         ></textarea>
         <Button variant="primary" className="w-fit" disabled={isPending}>
-          Submit
+          {isPending ? "Submitting..." : "Submit"}
         </Button>
       </form>
       <article>
