@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://www.adviceforall.org">
-    <img src="https://i.ibb.co/H2pRNRq/Advice-For-All-Repo-Banner.png" alt="advice for all" />
+    <img src=https://i.ibb.co/Y7BXHNr/Advice-For-All-Repo-Banner.png" alt="advice for all" />
   </a>
   <img src="https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white" alt="next js"/>
   <img src="https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="tailwind css" />
