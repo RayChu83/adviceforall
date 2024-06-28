@@ -22,5 +22,5 @@
   <li><strong>4. Implementation of the Design</strong></li>
   <p>The next step was to bring the figma design to life. I leveraged tools such as NextJS, Tailwind CSS, Material UI, and Shadcn UI.</p>
   <li><strong>5. Establish a connection to the backend</strong></li>
-  <p>The last step was to integrate the front end with the back end. I implemented seven unique REST API endpoints supporting various HTTP methods to handle data manipulation within a MongoDB database, ensuring the application's functionality.</p>
+  <p>The last step was to integrate the front end with the back end. I implemented 7 unique REST API endpoints supporting various HTTP methods to handle data manipulation within a MongoDB database, ensuring the application's functionality.</p>
 </ul>
