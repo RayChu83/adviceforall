@@ -9,6 +9,8 @@
   <img src="https://img.shields.io/badge/-Framer-black?style=for-the-badge&logoColor=white&logo=framer&color=0055FF" alt="framer motion" />
   <img src="https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white" alt="mongodb" />
 </div>
+<h2>⚠️ The problem</h2>
+<p>Many people around the world find it challenging to seek help or guidance. According to an article from <a href="https://news.stanford.edu/stories/2022/09/asking-help-hard-people-want-help-realize">Stanford University</a>, "we [typically] shy away from asking for help because we don’t want to bother other people, assuming that our request will feel like an inconvenience to them". However, AdviceForAll has revolutionized the way people can receive support and advice. With our commitment to complete anonymity, users can ask for and share advice entirely anonymously without any hesitation involved.</p>
 <h2>📜 Project description</h2>
 <p>AdviceForAll is a platform dedicated to bridging the informative gap by providing a platform for users to share their insights and offer guidance on a wide range of topics from anyone across the globe. The final product can be seen <a href="https://www.adviceforall.org">here</a>.</p>
 <h2>🔍 My approach</h2>
